@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
+  <title>Doğa — Сетка слов (турецкий)</title>
+  <style>
+    :root{
+      --bg0:#fbf3e8;
+      --bg1:#f6e2c9;
+      --card:#fff7ee;
+      --ink:#2a1c14;
+      --muted:#6a5147;
+      --shadow: 0 18px 50px rgba(42,28,20,.18);
+      --shadow2: 0 10px 22px rgba(42,28,20,.14);
+      --accent:#c74b3b; /* nar */
+      --accent2:#1f8a70; /* turkuaz */
+      --gold:#d9a441;
+      --gridGap: 6px;
+      --radius: 22px;
+      --cellRadius: 14px;
+      --cellSize: 42px;
+      --boardPad: 16px;
+      --safeB: env(safe-area-inset-bottom, 0px);
+      --safeT: env(safe-area-inset-top, 0px);
+      --safeL: env(safe-area-inset-left, 0px);
+      --safeR: env(safe-area-inset-right, 0px);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--ink);
+      background:
+        radial-gradient(900px 500px at 12% 8%, rgba(31,138,112,.16), transparent 62%),
+        radial-gradient(800px 520px at 90% 18%, rgba(199,75,59,.18), transparent 64%),
+        radial-gradient(900px 600px at 50% 110%, rgba(217,164,65,.20), transparent 68%),
+        linear-gradient(165deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    .app{
+      min-height:100%;
+      padding: calc(18px + var(--safeT)) calc(16px + var(--safeR)) calc(18px + var(--safeB)) calc(16px + var(--safeL));
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      max-width: 1100px;
+      margin:0 auto;
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .title h1{
+      margin:0;
+      font-size:20px;
+      letter-spacing:.2px;
+      line-height:1.15;
+    }
+    .title .sub{
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .pill{
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(42,28,20,.08);
+      padding:6px 10px;
+      border-radius:999px;
+      box-shadow: 0 10px 30px rgba(42,28,20,.08);
+      backdrop-filter: blur(10px);
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:stretch;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,247,238,.78));
+      border:1px solid rgba(42,28,20,.09);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .board{
+      padding: var(--boardPad);
+    }
+
+    .board::before{
+      content:"";
+      position:absolute;
+      inset:-40px -40px auto -40px;
+      height:160px;
+      background: radial-gradient(closest-side, rgba(217,164,65,.18), transparent 70%);
+      pointer-events:none;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(15, var(--cellSize));
+      gap: var(--gridGap);
+      justify-content:center;
+      align-content:center;
+      user-select:none;
+      -webkit-user-select:none;
+      touch-action:none;
+      padding: 10px;
+      border-radius: calc(var(--radius) - 6px);
+      background:
+        radial-gradient(1100px 520px at 50% 0%, rgba(199,75,59,.10), transparent 55%),
+        radial-gradient(900px 450px at 10% 100%, rgba(31,138,112,.11), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.45));
+      border: 1px solid rgba(42,28,20,.07);
+      box-shadow: var(--shadow2);
+    }
+
+    .cell{
+      position:relative;
+      width: var(--cellSize);
+      height: var(--cellSize);
+      border-radius: var(--cellRadius);
+      border: 1px solid rgba(42,28,20,.10);
+      background: linear-gradient(180deg, #ffffff, #fff2e5);
+      color: #23160f;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 800;
+      letter-spacing:.4px;
+      font-size: 16px;
+      cursor:pointer;
+      box-shadow:
+        0 10px 18px rgba(42,28,20,.10),
+        inset 0 2px 0 rgba(255,255,255,.9);
+      transform: translateZ(0);
+      transition: transform .08s ease, filter .18s ease, box-shadow .18s ease;
+    }
+    .cell:active{ transform: scale(.97); }
+    .cell.selected{
+      filter: saturate(1.1);
+      box-shadow:
+        0 14px 26px rgba(31,138,112,.20),
+        inset 0 2px 0 rgba(255,255,255,.92);
+      background: linear-gradient(180deg, rgba(31,138,112,.20), rgba(255,242,229,.95));
+      border-color: rgba(31,138,112,.35);
+    }
+
+    .cell.found{
+      border-color: rgba(42,28,20,.12);
+      box-shadow: 0 14px 34px rgba(42,28,20,.14), inset 0 2px 0 rgba(255,255,255,.88);
+      background: linear-gradient(180deg, rgba(217,164,65,.28), rgba(255,242,229,.94));
+    }
+    .cell.found::after{
+      content:"";
+      position:absolute;
+      inset: -2px;
+      border-radius: inherit;
+      pointer-events:none;
+      background: radial-gradient(closest-side, rgba(255,255,255,.55), transparent 70%);
+      opacity:.0;
+      animation: sparkle .85s ease-out;
+    }
+
+    @keyframes sparkle{
+      0%{opacity:0; transform:scale(.9)}
+      45%{opacity:.85; transform:scale(1.02)}
+      100%{opacity:0; transform:scale(1.12)}
+    }
+
+    .panel{
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .teaWrap{
+      display:flex;
+      align-items:stretch;
+      gap:12px;
+    }
+
+    .teaCard{
+      flex:0 0 150px;
+      padding: 12px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,247,238,.55));
+      border:1px solid rgba(42,28,20,.08);
+      box-shadow: 0 14px 28px rgba(42,28,20,.10);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .teaCard h2{
+      margin:0 0 10px 0;
+      font-size: 13px;
+      letter-spacing:.3px;
+      color: var(--muted);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .percent{
+      font-variant-numeric: tabular-nums;
+      color: #3a2a22;
+      font-weight: 900;
+      background: rgba(255,255,255,.75);
+      border:1px solid rgba(42,28,20,.08);
+      padding:2px 8px;
+      border-radius:999px;
+    }
+
+    .glass{
+      height: 170px;
+      width: 110px;
+      margin: 0 auto;
+      border-radius: 18px 18px 26px 26px;
+      border: 2px solid rgba(42,28,20,.20);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.2));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.45);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .tea{
+      position:absolute;
+      left:0; right:0;
+      bottom:0;
+      height:0%;
+      background:
+        radial-gradient(120px 80px at 50% 0%, rgba(255,255,255,.40), transparent 60%),
+        linear-gradient(180deg, #b94a2d, #6f2c1c);
+      transition: height .55s cubic-bezier(.22,1,.36,1);
+    }
+
+    .tea::before{
+      content:"";
+      position:absolute;
+      inset: 10px 8px auto 8px;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.26);
+      filter: blur(.2px);
+      opacity:.75;
+    }
+
+    .bubbles{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.0;
+      transition: opacity .25s ease;
+    }
+
+    .bubble{
+      position:absolute;
+      bottom:8px;
+      width:8px; height:8px;
+      border-radius:999px;
+      background: rgba(255,255,255,.38);
+      filter: blur(.1px);
+      animation: rise 2.2s ease-in infinite;
+    }
+
+    @keyframes rise{
+      0%{transform: translateY(0) scale(.9); opacity: 0}
+      15%{opacity:.9}
+      100%{transform: translateY(-150px) scale(1.15); opacity: 0}
+    }
+
+    .words{
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.65);
+      border:1px solid rgba(42,28,20,.08);
+      box-shadow: 0 14px 28px rgba(42,28,20,.10);
+      min-height: 220px;
+    }
+
+    .words h2{
+      margin:0 0 10px 0;
+      font-size: 13px;
+      letter-spacing:.3px;
+      color: var(--muted);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    ul.wordList{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .word{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(42,28,20,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.50));
+      box-shadow: 0 10px 16px rgba(42,28,20,.08);
+      align-items:baseline;
+    }
+
+    .word .tr{
+      font-weight: 900;
+      letter-spacing:.3px;
+    }
+    .word .ru{
+      color: var(--muted);
+      font-size: 12px;
+      text-align:right;
+    }
+
+    .word.found{
+      opacity:.72;
+      background: linear-gradient(180deg, rgba(31,138,112,.16), rgba(255,255,255,.55));
+      border-color: rgba(31,138,112,.22);
+    }
+    .word.found .tr, .word.found .ru{
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      text-decoration-color: rgba(31,138,112,.55);
+    }
+
+    .footerHint{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.60);
+      border:1px solid rgba(42,28,20,.07);
+      box-shadow: 0 10px 22px rgba(42,28,20,.08);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      background: linear-gradient(180deg, rgba(199,75,59,1), rgba(156,39,30,1));
+      color: #fff;
+      font-weight: 900;
+      letter-spacing:.2px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      box-shadow: 0 16px 26px rgba(199,75,59,.22);
+      cursor:pointer;
+      transition: transform .08s ease, filter .15s ease;
+    }
+    .btn:active{ transform: scale(.98); }
+    .btn.secondary{
+      background: linear-gradient(180deg, rgba(31,138,112,1), rgba(23,106,86,1));
+      box-shadow: 0 16px 26px rgba(31,138,112,.22);
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 20px;
+      background: rgba(22,14,10,.35);
+      backdrop-filter: blur(10px);
+      z-index: 20;
+    }
+    .overlay.show{ display:flex; }
+
+    .win{
+      width:min(520px, 96vw);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,247,238,.85));
+      border:1px solid rgba(42,28,20,.12);
+      box-shadow: 0 26px 80px rgba(0,0,0,.28);
+      padding: 18px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .win::before{
+      content:"";
+      position:absolute;
+      inset:-60px -60px auto -60px;
+      height:180px;
+      background: radial-gradient(closest-side, rgba(217,164,65,.24), transparent 70%);
+      pointer-events:none;
+    }
+
+    .win h2{
+      margin: 6px 0 6px 0;
+      font-size: 22px;
+      letter-spacing:.2px;
+    }
+    .win p{
+      margin: 0 0 14px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.45;
+    }
+
+    .confetti{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    .piece{
+      position:absolute;
+      top:-10px;
+      width:10px;
+      height:14px;
+      border-radius: 3px;
+      opacity:.9;
+      animation: fall 1.7s ease-in forwards;
+    }
+
+    @keyframes fall{
+      to{ transform: translateY(120vh) rotate(360deg); opacity:0.98; }
+    }
+
+    @media (max-width: 980px){
+      :root{ --cellSize: 38px; --gridGap: 5px; }
+      .layout{ grid-template-columns: 1fr; }
+      .teaWrap{ justify-content:space-between; }
+      .teaCard{ flex: 0 0 160px; }
+      ul.wordList{ grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 520px){
+      :root{ --cellSize: 32px; --gridGap: 4px; --boardPad: 12px; }
+      header{ flex-direction:column; align-items:flex-start; }
+      .teaWrap{ flex-direction:row; }
+      .teaCard{ flex:0 0 140px; }
+      ul.wordList{ grid-template-columns: 1fr; }
+      .glass{ height: 150px; width: 100px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="title">
+        <h1>Doğa — сетка слов на турецком</h1>
+        <div class="sub">
+          <div class="pill">Спокойный режим — без таймера</div>
+          <div class="pill">Выделяй слова свайпом по буквам</div>
+        </div>
+      </div>
+      <button id="btnNew" class="btn" type="button">Новая сетка</button>
+    </header>
+
+    <div class="layout">
+      <section class="card board" aria-label="Игровое поле">
+        <div id="grid" class="grid" role="grid" aria-label="Сетка букв"></div>
+      </section>
+
+      <aside class="card panel" aria-label="Слова и прогресс">
+        <div class="teaWrap">
+          <div class="teaCard" aria-label="Стакан турецкого чая">
+            <h2>
+              <span>Çay</span>
+              <span id="pct" class="percent">0%</span>
+            </h2>
+            <div class="glass" aria-hidden="true">
+              <div id="tea" class="tea"></div>
+              <div id="bubbles" class="bubbles" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="words" aria-label="Список слов">
+            <h2>
+              <span>Слова</span>
+              <span id="foundCount" class="pill">0/0</span>
+            </h2>
+            <ul id="wordList" class="wordList"></ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="footerHint">
+      <span>Подсказка: слово может быть горизонтально, вертикально или по диагонали.</span>
+      <button id="btnReset" class="btn secondary" type="button">Сбросить прогресс</button>
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay" aria-hidden="true">
+    <div class="win" role="dialog" aria-modal="true" aria-label="Победа">
+      <div id="confetti" class="confetti" aria-hidden="true"></div>
+      <h2>Tebrikler!</h2>
+      <p>Все слова найдены. Чай полный — можно отдыхать.</p>
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button id="btnAgain" class="btn" type="button">Сыграть ещё</button>
+        <button id="btnClose" class="btn secondary" type="button">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const SIZE = 15;
+      const LOCALE = "tr-TR";
+      const TURKISH_ALPHA = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
+
+      // 12 слов (3–7 букв)
+      const WORDS = [
+        { tr: "orman",   ru: "лес" },
+        { tr: "kır",     ru: "поле" },
+        { tr: "çiçek",   ru: "цветок" },
+        { tr: "böcek",   ru: "жук" },
+        { tr: "ağaç",    ru: "дерево" },
+        { tr: "deniz",   ru: "море" },
+        { tr: "okyanus", ru: "океан" },
+        { tr: "yaprak",  ru: "лист" },
+        { tr: "kuş",     ru: "птица" },
+        { tr: "dalga",   ru: "волна" },
+        { tr: "çöl",     ru: "пустыня" },
+        { tr: "plaj",    ru: "пляж" }
+      ];
+
+      const COLORS = [
+        "#C74B3B", // nar
+        "#1F8A70", // turkuaz
+        "#D9A441", // gold
+        "#7D3C98", // mor
+        "#2E86C1", // mavi
+        "#E67E22", // orange
+        "#16A085",
+        "#C0392B",
+        "#8E44AD",
+        "#27AE60",
+        "#AF7AC5",
+        "#B9770E"
+      ];
+
+      const gridEl = document.getElementById("grid");
+      const wordListEl = document.getElementById("wordList");
+      const foundCountEl = document.getElementById("foundCount");
+      const pctEl = document.getElementById("pct");
+      const teaEl = document.getElementById("tea");
+      const bubblesEl = document.getElementById("bubbles");
+      const overlayEl = document.getElementById("overlay");
+      const confettiEl = document.getElementById("confetti");
+
+      const btnNew = document.getElementById("btnNew");
+      const btnReset = document.getElementById("btnReset");
+      const btnAgain = document.getElementById("btnAgain");
+      const btnClose = document.getElementById("btnClose");
+
+      /** @type {string[][]} */
+      let board = [];
+      /** @type {Set<string>} */
+      let found = new Set();
+
+      // Selection state
+      let selecting = false;
+      /** @type {{r:number,c:number}[]} */
+      let path = [];
+      let dir = null; // {dr,dc}
+
+      // Web Audio
+      let audioCtx = null;
+      let audioArmed = false;
+
+      function upTR(s){
+        // Manual Turkish uppercase — iOS Safari toLocaleUpperCase('tr-TR') can fail
+        const map = {'ı':'I','i':'İ','ş':'Ş','ç':'Ç','ö':'Ö','ü':'Ü','ğ':'Ğ','â':'Â'};
+        let out = '';
+        for(const ch of s){
+          out += map[ch] || ch.toUpperCase();
+        }
+        return out;
+      }
+
+      function randInt(n){
+        return Math.floor(Math.random() * n);
+      }
+
+      function pick(arr){
+        return arr[randInt(arr.length)];
+      }
+
+      function normStep(dr, dc){
+        const sdr = dr === 0 ? 0 : (dr > 0 ? 1 : -1);
+        const sdc = dc === 0 ? 0 : (dc > 0 ? 1 : -1);
+        return { dr: sdr, dc: sdc };
+      }
+
+      function sameDir(a, b){
+        return a && b && a.dr === b.dr && a.dc === b.dc;
+      }
+
+      function makeEmptyBoard(){
+        return Array.from({length: SIZE}, () => Array.from({length: SIZE}, () => ""));
+      }
+
+      function fits(r, c){
+        return r >= 0 && r < SIZE && c >= 0 && c < SIZE;
+      }
+
+      function generateBoard(){
+        const directions = [
+          {dr: 1, dc: 0}, {dr: -1, dc: 0},
+          {dr: 0, dc: 1}, {dr: 0, dc: -1},
+          {dr: 1, dc: 1}, {dr: 1, dc: -1},
+          {dr: -1, dc: 1}, {dr: -1, dc: -1}
+        ];
+
+        const wordsUpper = WORDS.map(w => ({...w, up: upTR(w.tr)}));
+        const sorted = [...wordsUpper].sort((a,b) => b.up.length - a.up.length);
+
+        for(let attempt=0; attempt<120; attempt++){
+          const b = makeEmptyBoard();
+          let okAll = true;
+
+          for(const w of sorted){
+            let placed = false;
+
+            for(let t=0; t<650; t++){
+              const d = pick(directions);
+              const len = w.up.length;
+
+              const r0 = randInt(SIZE);
+              const c0 = randInt(SIZE);
+              const r1 = r0 + (len - 1) * d.dr;
+              const c1 = c0 + (len - 1) * d.dc;
+              if(!fits(r1, c1)) continue;
+
+              let can = true;
+              for(let i=0; i<len; i++){
+                const rr = r0 + i * d.dr;
+                const cc = c0 + i * d.dc;
+                const ch = w.up[i];
+                const cur = b[rr][cc];
+                if(cur !== "" && cur !== ch){ can = false; break; }
+              }
+              if(!can) continue;
+
+              for(let i=0; i<len; i++){
+                const rr = r0 + i * d.dr;
+                const cc = c0 + i * d.dc;
+                b[rr][cc] = w.up[i];
+              }
+              placed = true;
+              break;
+            }
+
+            if(!placed){ okAll = false; break; }
+          }
+
+          if(!okAll) continue;
+
+          // Fill empty
+          for(let r=0; r<SIZE; r++){
+            for(let c=0; c<SIZE; c++){
+              if(b[r][c] === ""){
+                b[r][c] = TURKISH_ALPHA[randInt(TURKISH_ALPHA.length)];
+              }
+            }
+          }
+
+          return b;
+        }
+
+        // fallback (should not happen)
+        const b = makeEmptyBoard();
+        for(let r=0; r<SIZE; r++) for(let c=0; c<SIZE; c++) b[r][c] = TURKISH_ALPHA[randInt(TURKISH_ALPHA.length)];
+        return b;
+      }
+
+      function renderBoard(){
+        gridEl.innerHTML = "";
+        const frag = document.createDocumentFragment();
+        for(let r=0; r<SIZE; r++){
+          for(let c=0; c<SIZE; c++){
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "cell";
+            btn.textContent = board[r][c];
+            btn.dataset.r = String(r);
+            btn.dataset.c = String(c);
+            btn.setAttribute("role", "gridcell");
+            btn.setAttribute("aria-label", `${r+1}:${c+1} ${board[r][c]}`);
+            frag.appendChild(btn);
+          }
+        }
+        gridEl.appendChild(frag);
+      }
+
+      function renderWords(){
+        wordListEl.innerHTML = "";
+        WORDS.forEach((w, idx) => {
+          const li = document.createElement("li");
+          li.className = "word";
+          li.dataset.word = upTR(w.tr);
+          li.dataset.idx = String(idx);
+          li.innerHTML = `<span class="tr">${w.tr}</span><span class="ru">${w.ru}</span>`;
+          wordListEl.appendChild(li);
+        });
+        updateUI();
+      }
+
+      function updateUI(){
+        const total = WORDS.length;
+        const done = found.size;
+        foundCountEl.textContent = `${done}/${total}`;
+
+        const p = total ? Math.round((done / total) * 100) : 0;
+        pctEl.textContent = `${p}%`;
+        teaEl.style.height = `${p}%`;
+
+        bubblesEl.style.opacity = done ? "1" : "0";
+
+        // update word list
+        [...wordListEl.children].forEach(li => {
+          const w = li.dataset.word;
+          li.classList.toggle("found", found.has(w));
+        });
+      }
+
+      function clearSelectionVisual(){
+        document.querySelectorAll(".cell.selected").forEach(el => el.classList.remove("selected"));
+      }
+
+      function setSelectedVisual(){
+        clearSelectionVisual();
+        for(const p of path){
+          const el = cellEl(p.r, p.c);
+          if(el && !el.classList.contains("found")) el.classList.add("selected");
+        }
+      }
+
+      function cellEl(r, c){
+        return gridEl.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
+      }
+
+      function pointToCell(clientX, clientY){
+        const el = document.elementFromPoint(clientX, clientY);
+        if(!el) return null;
+        const btn = el.closest?.(".cell");
+        if(!btn) return null;
+        const r = Number(btn.dataset.r);
+        const c = Number(btn.dataset.c);
+        if(Number.isNaN(r) || Number.isNaN(c)) return null;
+        return { r, c };
+      }
+
+      function pathString(){
+        let s = "";
+        for(const p of path){
+          s += board[p.r][p.c];
+        }
+        return s;
+      }
+
+      function isKnownWord(s){
+        const u = s;
+        const r = u.split("").reverse().join("");
+        const set = new Set(WORDS.map(w => upTR(w.tr)));
+        if(set.has(u)) return u;
+        if(set.has(r)) return r;
+        return null;
+      }
+
+      function markFound(wordUp){
+        if(found.has(wordUp)) return;
+        found.add(wordUp);
+
+        const idx = WORDS.findIndex(w => upTR(w.tr) === wordUp);
+        const color = COLORS[idx % COLORS.length];
+
+        // Lock in the cells for this path (in either direction)
+        const candidate = pathString();
+        const rev = candidate.split("").reverse().join("");
+        const chosen = (candidate === wordUp) ? path : [...path].reverse();
+
+        for(const p of chosen){
+          const el = cellEl(p.r, p.c);
+          if(!el) continue;
+          el.classList.remove("selected");
+          el.classList.add("found");
+          el.style.background = `linear-gradient(180deg, ${hexToRgba(color,.34)}, rgba(255,242,229,.96))`;
+          el.style.borderColor = hexToRgba(color,.42);
+          el.style.boxShadow = `0 14px 30px ${hexToRgba(color,.18)}, inset 0 2px 0 rgba(255,255,255,.9)`;
+        }
+
+        // Highlight the word item
+        const li = [...wordListEl.children].find(el => el.dataset.word === wordUp);
+        if(li){
+          li.classList.add("found");
+          li.style.borderColor = hexToRgba(color,.28);
+          li.style.boxShadow = `0 14px 24px ${hexToRgba(color,.14)}`;
+        }
+
+        updateUI();
+        playSuccessSound();
+        popBubbles();
+
+        if(found.size === WORDS.length){
+          showWin();
+        }
+      }
+
+      function hexToRgba(hex, a){
+        const h = hex.replace("#", "");
+        const r = parseInt(h.slice(0,2), 16);
+        const g = parseInt(h.slice(2,4), 16);
+        const b = parseInt(h.slice(4,6), 16);
+        return `rgba(${r},${g},${b},${a})`;
+      }
+
+      function popBubbles(){
+        bubblesEl.innerHTML = "";
+        const p = Math.max(2, Math.min(10, found.size));
+        for(let i=0; i<p; i++){
+          const b = document.createElement("div");
+          b.className = "bubble";
+          const left = 10 + Math.random() * 80;
+          const delay = Math.random() * 0.9;
+          const dur = 1.7 + Math.random() * 0.9;
+          const size = 6 + Math.random() * 7;
+          b.style.left = `${left}%`;
+          b.style.animationDelay = `${delay}s`;
+          b.style.animationDuration = `${dur}s`;
+          b.style.width = `${size}px`;
+          b.style.height = `${size}px`;
+          bubblesEl.appendChild(b);
+        }
+      }
+
+      function showWin(){
+        overlayEl.classList.add("show");
+        overlayEl.setAttribute("aria-hidden", "false");
+        fireConfetti();
+        playWinSound();
+      }
+
+      function hideWin(){
+        overlayEl.classList.remove("show");
+        overlayEl.setAttribute("aria-hidden", "true");
+        confettiEl.innerHTML = "";
+      }
+
+      function fireConfetti(){
+        confettiEl.innerHTML = "";
+        const colors = ["#C74B3B", "#1F8A70", "#D9A441", "#2E86C1", "#E67E22", "#8E44AD"]; 
+        for(let i=0; i<42; i++){
+          const p = document.createElement("div");
+          p.className = "piece";
+          p.style.left = `${Math.random()*100}%`;
+          p.style.background = colors[i % colors.length];
+          p.style.transform = `translateY(-10px) rotate(${Math.random()*120}deg)`;
+          p.style.animationDelay = `${Math.random()*0.35}s`;
+          p.style.animationDuration = `${1.35 + Math.random()*0.8}s`;
+          p.style.width = `${8 + Math.random()*10}px`;
+          p.style.height = `${10 + Math.random()*14}px`;
+          confettiEl.appendChild(p);
+        }
+      }
+
+      function resetProgress(){
+        found = new Set();
+        hideWin();
+        clearSelection();
+        // remove found styles
+        document.querySelectorAll(".cell").forEach(el => {
+          el.classList.remove("found", "selected");
+          el.removeAttribute("style");
+        });
+        document.querySelectorAll(".word").forEach(el => {
+          el.classList.remove("found");
+          el.removeAttribute("style");
+        });
+        updateUI();
+        popBubbles();
+      }
+
+      function newGame(){
+        found = new Set();
+        hideWin();
+        clearSelection();
+        board = generateBoard();
+        renderBoard();
+        renderWords();
+        popBubbles();
+      }
+
+      function clearSelection(){
+        selecting = false;
+        path = [];
+        dir = null;
+        clearSelectionVisual();
+      }
+
+      function addToPath(cell){
+        if(!cell) return;
+        const last = path[path.length - 1];
+        if(last && last.r === cell.r && last.c === cell.c) return;
+        if(path.some(p => p.r === cell.r && p.c === cell.c)) return;
+
+        if(path.length === 0){
+          path.push(cell);
+          setSelectedVisual();
+          return;
+        }
+
+        const prev = path[path.length - 1];
+        const dr = cell.r - prev.r;
+        const dc = cell.c - prev.c;
+        if(Math.abs(dr) > 1 || Math.abs(dc) > 1) return;
+        if(dr === 0 && dc === 0) return;
+
+        const step = normStep(dr, dc);
+        if(path.length === 1){
+          dir = step;
+          path.push(cell);
+          setSelectedVisual();
+          return;
+        }
+
+        if(!sameDir(dir, step)) return;
+
+        // enforce straight-line continuation
+        const expected = { r: prev.r + dir.dr, c: prev.c + dir.dc };
+        if(cell.r !== expected.r || cell.c !== expected.c) return;
+
+        path.push(cell);
+        setSelectedVisual();
+      }
+
+      function finalizeSelection(){
+        if(path.length < 3){
+          clearSelection();
+          return;
+        }
+        const s = pathString();
+        const hit = isKnownWord(s);
+        if(hit){
+          markFound(hit);
+        }
+        clearSelection();
+      }
+
+      function armAudio(){
+        if(audioArmed) return;
+        audioArmed = true;
+        try{
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(err){
+          audioCtx = null;
+        }
+      }
+
+      async function resumeAudio(){
+        if(!audioCtx) return;
+        if(audioCtx.state === "suspended"){
+          try{ await audioCtx.resume(); } catch(e){}
+        }
+      }
+
+      function playSuccessSound(){
+        if(!audioCtx) return;
+        const t0 = audioCtx.currentTime;
+
+        // a tiny "tap" + warm triad
+        const master = audioCtx.createGain();
+        master.gain.setValueAtTime(0.0001, t0);
+        master.gain.exponentialRampToValueAtTime(0.35, t0 + 0.02);
+        master.gain.exponentialRampToValueAtTime(0.001, t0 + 0.45);
+        master.connect(audioCtx.destination);
+
+        const freqs = [523.25, 659.25, 783.99]; // C5 E5 G5
+        freqs.forEach((f, i) => {
+          const o = audioCtx.createOscillator();
+          o.type = i === 0 ? "triangle" : "sine";
+          o.frequency.setValueAtTime(f, t0);
+          o.frequency.exponentialRampToValueAtTime(f * 1.02, t0 + 0.08);
+
+          const g = audioCtx.createGain();
+          g.gain.setValueAtTime(0.0001, t0);
+          g.gain.exponentialRampToValueAtTime(0.22 - i*0.04, t0 + 0.015);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.38);
+
+          o.connect(g);
+          g.connect(master);
+          o.start(t0 + i*0.008);
+          o.stop(t0 + 0.42);
+        });
+
+        // a short filtered noise "spark"
+        const noiseBuf = audioCtx.createBuffer(1, Math.floor(audioCtx.sampleRate * 0.10), audioCtx.sampleRate);
+        const data = noiseBuf.getChannelData(0);
+        for(let i=0; i<data.length; i++) data[i] = (Math.random()*2-1) * (1 - i/data.length);
+
+        const ns = audioCtx.createBufferSource();
+        ns.buffer = noiseBuf;
+        const bp = audioCtx.createBiquadFilter();
+        bp.type = "bandpass";
+        bp.frequency.setValueAtTime(3200, t0);
+        bp.Q.setValueAtTime(6, t0);
+
+        const ng = audioCtx.createGain();
+        ng.gain.setValueAtTime(0.0001, t0);
+        ng.gain.exponentialRampToValueAtTime(0.18, t0 + 0.01);
+        ng.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.12);
+
+        ns.connect(bp);
+        bp.connect(ng);
+        ng.connect(master);
+        ns.start(t0);
+        ns.stop(t0 + 0.12);
+      }
+
+      function playWinSound(){
+        if(!audioCtx) return;
+        const t0 = audioCtx.currentTime;
+        const master = audioCtx.createGain();
+        master.gain.setValueAtTime(0.0001, t0);
+        master.gain.exponentialRampToValueAtTime(0.45, t0 + 0.03);
+        master.gain.exponentialRampToValueAtTime(0.001, t0 + 0.8);
+        master.connect(audioCtx.destination);
+
+        const notes = [
+          {f: 523.25, dt:0.00},
+          {f: 659.25, dt:0.06},
+          {f: 783.99, dt:0.12},
+          {f: 1046.5, dt:0.18}
+        ];
+        notes.forEach(n => {
+          const o = audioCtx.createOscillator();
+          o.type = "sine";
+          o.frequency.setValueAtTime(n.f, t0 + n.dt);
+          const g = audioCtx.createGain();
+          g.gain.setValueAtTime(0.0001, t0 + n.dt);
+          g.gain.exponentialRampToValueAtTime(0.28, t0 + n.dt + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + n.dt + 0.55);
+          o.connect(g);
+          g.connect(master);
+          o.start(t0 + n.dt);
+          o.stop(t0 + n.dt + 0.6);
+        });
+      }
+
+      // Pointer / touch handling
+      function onPointerDown(e){
+        if(!(e.target instanceof Element)) return;
+        const cell = e.target.closest?.(".cell");
+        if(!cell) return;
+
+        armAudio();
+        resumeAudio();
+
+        selecting = true;
+        gridEl.setPointerCapture?.(e.pointerId);
+
+        const r = Number(cell.dataset.r);
+        const c = Number(cell.dataset.c);
+        clearSelection();
+        selecting = true;
+        addToPath({r,c});
+
+        e.preventDefault();
+      }
+
+      function onPointerMove(e){
+        if(!selecting) return;
+        const cell = pointToCell(e.clientX, e.clientY);
+        addToPath(cell);
+        e.preventDefault();
+      }
+
+      function onPointerUp(e){
+        if(!selecting) return;
+        finalizeSelection();
+        e.preventDefault();
+      }
+
+      function onPointerCancel(){
+        if(!selecting) return;
+        clearSelection();
+      }
+
+      btnNew.addEventListener("click", () => newGame());
+      btnReset.addEventListener("click", () => resetProgress());
+      btnAgain.addEventListener("click", () => { hideWin(); newGame(); });
+      btnClose.addEventListener("click", () => hideWin());
+      overlayEl.addEventListener("click", (e) => {
+        if(e.target === overlayEl) hideWin();
+      });
+
+      gridEl.addEventListener("pointerdown", onPointerDown);
+      gridEl.addEventListener("pointermove", onPointerMove);
+      gridEl.addEventListener("pointerup", onPointerUp);
+      gridEl.addEventListener("pointercancel", onPointerCancel);
+      gridEl.addEventListener("lostpointercapture", onPointerCancel);
+
+      // Prevent accidental scroll on iOS when selecting
+      gridEl.addEventListener("touchmove", (e) => e.preventDefault(), {passive:false});
+
+      // init
+      try{ newGame(); } catch(e){ document.body.innerHTML='<pre style="color:red;padding:20px">'+e.message+'\n'+e.stack+'</pre>'; }
+    })();
+  </script>
+</body>
+</html>
