@@ -8,16 +8,16 @@
   <title>Doğa — Сетка слов (турецкий)</title>
   <style>
     :root{
-      --bg0:#fbf3e8;
-      --bg1:#f6e2c9;
-      --card:#fff7ee;
-      --ink:#2a1c14;
-      --muted:#6a5147;
+      --bg0:#ffe1b8;
+      --bg1:#ff7a4c;
+      --card:#fffdf8;
+      --ink:#1a0f0b;
+      --muted:#5a3a2e;
       --shadow: 0 18px 50px rgba(42,28,20,.18);
       --shadow2: 0 10px 22px rgba(42,28,20,.14);
-      --accent:#c74b3b; /* nar */
-      --accent2:#1f8a70; /* turkuaz */
-      --gold:#d9a441;
+      --accent:#E84545; /* nar (brighter) */
+      --accent2:#0FA98F; /* turkuaz (brighter) */
+      --gold:#F4B93A;
       --gridGap: 6px;
       --radius: 22px;
       --cellRadius: 14px;
@@ -37,9 +37,9 @@
       font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
       color:var(--ink);
       background:
-        radial-gradient(900px 500px at 12% 8%, rgba(31,138,112,.16), transparent 62%),
-        radial-gradient(800px 520px at 90% 18%, rgba(199,75,59,.18), transparent 64%),
-        radial-gradient(900px 600px at 50% 110%, rgba(217,164,65,.20), transparent 68%),
+        radial-gradient(900px 500px at 12% 8%, rgba(15,169,143,.22), transparent 62%),
+        radial-gradient(800px 520px at 90% 18%, rgba(232,69,69,.24), transparent 64%),
+        radial-gradient(900px 600px at 50% 110%, rgba(244,185,58,.26), transparent 68%),
         linear-gradient(165deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
@@ -99,7 +99,7 @@
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,247,238,.78));
+      background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,253,248,.84));
       border:1px solid rgba(42,28,20,.09);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -114,7 +114,7 @@
       position:absolute;
       inset:-40px -40px auto -40px;
       height:160px;
-      background: radial-gradient(closest-side, rgba(217,164,65,.18), transparent 70%);
+      background: radial-gradient(closest-side, rgba(244,185,58,.22), transparent 70%);
       pointer-events:none;
     }
 
@@ -129,8 +129,8 @@
       padding: var(--gridPad);
       border-radius: calc(var(--radius) - 6px);
       background:
-        radial-gradient(1100px 520px at 50% 0%, rgba(199,75,59,.10), transparent 55%),
-        radial-gradient(900px 450px at 10% 100%, rgba(31,138,112,.11), transparent 55%),
+        radial-gradient(1100px 520px at 50% 0%, rgba(232,69,69,.16), transparent 55%),
+        radial-gradient(900px 450px at 10% 100%, rgba(15,169,143,.18), transparent 55%),
         linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.45));
       border: 1px solid rgba(42,28,20,.07);
       box-shadow: var(--shadow2);
@@ -161,10 +161,10 @@
     .cell.selected{
       filter: saturate(1.1);
       box-shadow:
-        0 14px 26px rgba(31,138,112,.20),
+        0 14px 26px rgba(15,169,143,.26),
         inset 0 2px 0 rgba(255,255,255,.92);
-      background: linear-gradient(180deg, rgba(31,138,112,.20), rgba(255,242,229,.95));
-      border-color: rgba(31,138,112,.35);
+      background: linear-gradient(180deg, rgba(15,169,143,.24), rgba(255,242,229,.96));
+      border-color: rgba(15,169,143,.44);
     }
 
     .cell.found{
@@ -336,14 +336,14 @@
     .word .ru{ color: var(--muted); font-size: 12px; text-align:right; }
 
     .word.found{
-      opacity:.72;
-      background: linear-gradient(180deg, rgba(31,138,112,.16), rgba(255,255,255,.55));
-      border-color: rgba(31,138,112,.22);
+      opacity:.78;
+      background: linear-gradient(180deg, rgba(15,169,143,.20), rgba(255,255,255,.62));
+      border-color: rgba(15,169,143,.30);
     }
     .word.found .tr, .word.found .ru{
       text-decoration: line-through;
       text-decoration-thickness: 2px;
-      text-decoration-color: rgba(31,138,112,.55);
+      text-decoration-color: rgba(15,169,143,.68);
     }
 
     .footerHint{
@@ -364,20 +364,20 @@
     .btn{
       appearance:none;
       border:none;
-      background: linear-gradient(180deg, rgba(199,75,59,1), rgba(156,39,30,1));
+      background: linear-gradient(180deg, #E84545, #B91F2B);
       color: #fff;
       font-weight: 900;
       letter-spacing:.2px;
       padding: 10px 14px;
       border-radius: 14px;
-      box-shadow: 0 16px 26px rgba(199,75,59,.22);
+      box-shadow: 0 16px 26px rgba(232,69,69,.30);
       cursor:pointer;
       transition: transform .08s ease, filter .15s ease;
     }
     .btn:active{ transform: scale(.98); }
     .btn.secondary{
-      background: linear-gradient(180deg, rgba(31,138,112,1), rgba(23,106,86,1));
-      box-shadow: 0 16px 26px rgba(31,138,112,.22);
+      background: linear-gradient(180deg, #0FA98F, #0B7564);
+      box-shadow: 0 16px 26px rgba(15,169,143,.30);
     }
 
     .overlay{
@@ -485,8 +485,8 @@
               <svg class="glassSvg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
                   <linearGradient id="teaGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#c35a2f"/>
-                    <stop offset="100%" stop-color="#6f2c1c"/>
+                    <stop offset="0%" stop-color="#E2573A" stop-opacity="0.78"/>
+                    <stop offset="100%" stop-color="#7A1A12" stop-opacity="0.84"/>
                   </linearGradient>
 
                   <linearGradient id="glassShine" x1="0" y1="0" x2="1" y2="0">
@@ -498,7 +498,7 @@
 
                   <clipPath id="glassClip">
                     <!-- tulip-like Turkish tea glass (armudu) -->
-                    <path d="M38 10 C33 34 33 52 41 72 C49 92 45 112 37 128 C29 144 27 162 31 182 C35 195 47 198 60 198 C73 198 85 195 89 182 C93 162 91 144 83 128 C75 112 71 92 79 72 C87 52 87 34 82 10 Z"/>
+                    <path d="M24 16 C18 36 20 54 30 76 C40 92 40 110 33 126 C24 150 18 166 16 178 C18 194 36 198 60 198 C84 198 102 194 104 178 C102 166 96 150 87 126 C80 110 80 92 90 76 C100 54 102 36 96 16 Z"/>
                   </clipPath>
                 </defs>
 
@@ -509,15 +509,15 @@
                 </g>
 
                 <!-- Glass body -->
-                <path d="M38 10 C33 34 33 52 41 72 C49 92 45 112 37 128 C29 144 27 162 31 182 C35 195 47 198 60 198 C73 198 85 195 89 182 C93 162 91 144 83 128 C75 112 71 92 79 72 C87 52 87 34 82 10 Z"
-                      fill="rgba(255,255,255,.16)" stroke="rgba(42,28,20,.22)" stroke-width="3"/>
+                <path d="M24 16 C18 36 20 54 30 76 C40 92 40 110 33 126 C24 150 18 166 16 178 C18 194 36 198 60 198 C84 198 102 194 104 178 C102 166 96 150 87 126 C80 110 80 92 90 76 C100 54 102 36 96 16 Z"
+                      fill="rgba(255,255,255,.14)" stroke="rgba(26,15,11,.26)" stroke-width="3"/>
 
                 <!-- Rim line -->
-                <path d="M40 16 C46 14 53 13 60 13 C67 13 74 14 80 16" fill="none" stroke="rgba(42,28,20,.25)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M28 20 C40 16 52 15 60 15 C68 15 80 16 92 20" fill="none" stroke="rgba(26,15,11,.28)" stroke-width="2.2" stroke-linecap="round"/>
 
                 <!-- Shine -->
-                <path d="M46 18 C41 44 41 58 47 74 C53 90 50 112 44 130 C38 148 36 164 39 180"
-                      fill="none" stroke="url(#glassShine)" stroke-width="6" stroke-linecap="round" opacity=".9"/>
+                <path d="M38 24 C33 54 33 70 39 88 C45 106 42 126 36 144 C30 162 30 174 34 186"
+                      fill="none" stroke="url(#glassShine)" stroke-width="6" stroke-linecap="round" opacity=".92"/>
               </svg>
 
               <div id="bubbles" class="bubbles" aria-hidden="true"></div>
@@ -526,12 +526,12 @@
               <svg class="saucer" viewBox="0 0 140 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
                   <linearGradient id="sauc" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="rgba(255,255,255,.8)"/>
-                    <stop offset="100%" stop-color="rgba(217,164,65,.25)"/>
+                    <stop offset="0%" stop-color="#F3D7B1"/>
+                    <stop offset="100%" stop-color="#D3A060"/>
                   </linearGradient>
                 </defs>
-                <ellipse cx="70" cy="18" rx="60" ry="10" fill="url(#sauc)" stroke="rgba(42,28,20,.16)" stroke-width="1.5"/>
-                <ellipse cx="70" cy="18" rx="32" ry="5" fill="rgba(255,255,255,.28)"/>
+                <ellipse cx="70" cy="18" rx="60" ry="10" fill="url(#sauc)" stroke="rgba(138,90,43,.35)" stroke-width="1.6"/>
+                <ellipse cx="70" cy="18" rx="34" ry="5.5" fill="rgba(255,255,255,.14)"/>
               </svg>
             </div>
           </div>
@@ -585,9 +585,9 @@
       ];
 
       var COLORS = [
-        "#C74B3B", // nar
-        "#1F8A70", // turkuaz
-        "#D9A441", // gold
+        "#E84545", // nar
+        "#0FA98F", // turkuaz
+        "#F4B93A", // gold
         "#7D3C98", // mor
         "#2E86C1", // mavi
         "#E67E22",
@@ -923,7 +923,7 @@
 
       function fireConfetti(){
         confettiEl.innerHTML = "";
-        var colors = ["#C74B3B", "#1F8A70", "#D9A441", "#2E86C1", "#E67E22", "#8E44AD"]; 
+        var colors = ["#E84545", "#0FA98F", "#F4B93A", "#2E86C1", "#FF7A00", "#8E44AD"]; 
         var i;
         for(i=0; i<42; i++){
           var p = document.createElement("div");
