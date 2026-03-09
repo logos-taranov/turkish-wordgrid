@@ -170,7 +170,7 @@
     .cell.found{
       border-color: rgba(42,28,20,.12);
       box-shadow: 0 14px 34px rgba(42,28,20,.14), inset 0 2px 0 rgba(255,255,255,.88);
-      background: linear-gradient(180deg, rgba(217,164,65,.28), rgba(255,242,229,.94));
+      background: linear-gradient(180deg, rgba(244,185,58,.40), rgba(255,242,229,.95));
     }
     .cell.found::after{
       content:"";
@@ -206,7 +206,7 @@
       flex:0 0 160px;
       padding: 12px;
       border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,247,238,.55));
+      background: linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,244,232,.62));
       border:1px solid rgba(42,28,20,.08);
       box-shadow: 0 14px 28px rgba(42,28,20,.10);
       position:relative;
@@ -294,7 +294,7 @@
     .words{
       padding: 12px;
       border-radius: 18px;
-      background: rgba(255,255,255,.65);
+      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.66));
       border:1px solid rgba(42,28,20,.08);
       box-shadow: 0 14px 28px rgba(42,28,20,.10);
       min-height: 220px;
@@ -354,7 +354,7 @@
       flex-wrap:wrap;
       padding: 10px 12px;
       border-radius: 16px;
-      background: rgba(255,255,255,.60);
+      background: rgba(255,255,255,.72);
       border:1px solid rgba(42,28,20,.07);
       box-shadow: 0 10px 22px rgba(42,28,20,.08);
       color: var(--muted);
@@ -396,7 +396,7 @@
     .win{
       width:min(520px, 96vw);
       border-radius: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,247,238,.85));
+      background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,253,248,.88));
       border:1px solid rgba(42,28,20,.12);
       box-shadow: 0 26px 80px rgba(0,0,0,.28);
       padding: 18px;
@@ -410,7 +410,7 @@
       position:absolute;
       inset:-60px -60px auto -60px;
       height:180px;
-      background: radial-gradient(closest-side, rgba(217,164,65,.24), transparent 70%);
+      background: radial-gradient(closest-side, rgba(244,185,58,.30), transparent 70%);
       pointer-events:none;
     }
 
@@ -1018,9 +1018,9 @@
           if(!el) continue;
           el.classList.remove("selected");
           el.classList.add("found");
-          el.style.background = "linear-gradient(180deg, " + hexToRgba(color,.34) + ", rgba(255,242,229,.96))";
-          el.style.borderColor = hexToRgba(color,.42);
-          el.style.boxShadow = "0 14px 30px " + hexToRgba(color,.18) + ", inset 0 2px 0 rgba(255,255,255,.9)";
+          el.style.background = "linear-gradient(180deg, " + hexToRgba(color,.46) + ", rgba(255,242,229,.97))";
+          el.style.borderColor = hexToRgba(color,.58);
+          el.style.boxShadow = "0 14px 30px " + hexToRgba(color,.24) + ", inset 0 2px 0 rgba(255,255,255,.9)";
         }
 
         // Highlight the word item
@@ -1029,8 +1029,8 @@
           var li = children[i];
           if(li.getAttribute("data-word") === wordUp){
             li.classList.add("found");
-            li.style.borderColor = hexToRgba(color,.28);
-            li.style.boxShadow = "0 14px 24px " + hexToRgba(color,.14);
+            li.style.borderColor = hexToRgba(color,.42);
+            li.style.boxShadow = "0 14px 24px " + hexToRgba(color,.18);
             break;
           }
         }
