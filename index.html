@@ -8,22 +8,30 @@
   <title>Doğa — Сетка слов (турецкий)</title>
   <style>
     :root{
-      --bg0:#ffe1b8;
-      --bg1:#ff7a4c;
-      --card:#fffdf8;
-      --ink:#1a0f0b;
-      --muted:#5a3a2e;
-      --shadow: 0 18px 50px rgba(42,28,20,.18);
-      --shadow2: 0 10px 22px rgba(42,28,20,.14);
-      --accent:#E84545; /* nar (brighter) */
-      --accent2:#0FA98F; /* turkuaz (brighter) */
-      --gold:#F4B93A;
-      --gridGap: 6px;
+      /* Spacing */
+      --appPadX: 16px;
+      --appPadY: 18px;
+
+      /* Palette */
+      --ink:#1b0f09;
+      --muted:#5e3c2c;
+      --accent:#ff3b3b;   /* яркий гранат */
+      --accent2:#12c7a2;  /* яркий туркуаз */
+      --gold:#ffcc3b;
+
+      /* 3D / materials */
+      --shadow: 0 18px 50px rgba(18,10,6,.28);
+      --shadow2: 0 12px 22px rgba(18,10,6,.22);
       --radius: 22px;
+
+      /* Grid */
+      --gridGap: 6px;
       --cellRadius: 14px;
       --cellSize: 42px;
       --boardPad: 16px;
       --gridPad: 10px;
+
+      /* Safe area */
       --safeB: env(safe-area-inset-bottom, 0px);
       --safeT: env(safe-area-inset-top, 0px);
       --safeL: env(safe-area-inset-left, 0px);
@@ -32,21 +40,54 @@
 
     *{box-sizing:border-box}
     html,body{height:100%}
+
+    html{
+      /* prevent white gaps if body height is smaller than viewport in some renderers */
+      background: #8b461d;
+    }
+
     body{
       margin:0;
+      min-height:100%;
       font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
       color:var(--ink);
-      background:
-        radial-gradient(900px 500px at 12% 8%, rgba(15,169,143,.22), transparent 62%),
-        radial-gradient(800px 520px at 90% 18%, rgba(232,69,69,.24), transparent 64%),
-        radial-gradient(900px 600px at 50% 110%, rgba(244,185,58,.26), transparent 68%),
-        linear-gradient(165deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
+
+      /* Wooden table (no images: layered gradients) */
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(255,255,255,.14), transparent 60%),
+        radial-gradient(1100px 700px at 85% 0%, rgba(255,210,120,.10), transparent 60%),
+        radial-gradient(900px 650px at 50% 110%, rgba(0,0,0,.22), transparent 70%),
+        repeating-linear-gradient( 90deg,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 10px,
+          rgba(0,0,0,.05) 10px,
+          rgba(0,0,0,.05) 22px,
+          rgba(255,255,255,.04) 22px,
+          rgba(255,255,255,.04) 38px
+        ),
+        linear-gradient(180deg, #b86a33, #8b461d);
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(closest-side at 50% 0%, rgba(0,0,0,.08), transparent 65%),
+        radial-gradient(closest-side at 50% 110%, rgba(0,0,0,.30), transparent 70%);
+      mix-blend-mode:multiply;
+      opacity:.9;
     }
 
     .app{
       min-height:100%;
-      padding: calc(18px + var(--safeT)) calc(16px + var(--safeR)) calc(18px + var(--safeB)) calc(16px + var(--safeL));
+      padding:
+        calc(var(--appPadY) + var(--safeT))
+        calc(var(--appPadX) + var(--safeR))
+        calc(var(--appPadY) + var(--safeB))
+        calc(var(--appPadX) + var(--safeL));
       display:flex;
       flex-direction:column;
       gap:14px;
@@ -72,10 +113,11 @@
       font-size:20px;
       letter-spacing:.2px;
       line-height:1.15;
+      text-shadow: 0 2px 0 rgba(255,255,255,.25);
     }
     .title .sub{
       font-size:13px;
-      color:var(--muted);
+      color:rgba(255,255,255,.85);
       display:flex;
       gap:10px;
       align-items:center;
@@ -83,11 +125,12 @@
     }
 
     .pill{
-      background:rgba(255,255,255,.7);
-      border:1px solid rgba(42,28,20,.08);
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.22);
+      color: rgba(255,255,255,.92);
       padding:6px 10px;
       border-radius:999px;
-      box-shadow: 0 10px 30px rgba(42,28,20,.08);
+      box-shadow: 0 10px 26px rgba(0,0,0,.12);
       backdrop-filter: blur(10px);
     }
 
@@ -99,23 +142,38 @@
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,253,248,.84));
-      border:1px solid rgba(42,28,20,.09);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
     }
 
-    .board{ padding: var(--boardPad); }
+    /* Raised wooden board */
+    .board{
+      padding: var(--boardPad);
+      background:
+        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.22), transparent 55%),
+        repeating-linear-gradient( 90deg,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 14px,
+          rgba(0,0,0,.07) 14px,
+          rgba(0,0,0,.07) 28px
+        ),
+        linear-gradient(180deg, #c98044, #8a4a1f);
+      border: 2px solid rgba(60,28,10,.55);
+      box-shadow:
+        0 22px 70px rgba(0,0,0,.26),
+        inset 0 2px 0 rgba(255,255,255,.20),
+        inset 0 -10px 24px rgba(0,0,0,.22);
+    }
 
     .board::before{
       content:"";
       position:absolute;
-      inset:-40px -40px auto -40px;
-      height:160px;
-      background: radial-gradient(closest-side, rgba(244,185,58,.22), transparent 70%);
+      inset:10px;
+      border-radius: calc(var(--radius) - 10px);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.12);
       pointer-events:none;
+      opacity:.9;
     }
 
     .grid{
@@ -127,65 +185,97 @@
       -webkit-user-select:none;
       touch-action:none;
       padding: var(--gridPad);
-      border-radius: calc(var(--radius) - 6px);
+      border-radius: calc(var(--radius) - 10px);
       background:
-        radial-gradient(1100px 520px at 50% 0%, rgba(232,69,69,.16), transparent 55%),
-        radial-gradient(900px 450px at 10% 100%, rgba(15,169,143,.18), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.45));
-      border: 1px solid rgba(42,28,20,.07);
-      box-shadow: var(--shadow2);
+        radial-gradient(1200px 520px at 50% 0%, rgba(255,255,255,.18), transparent 60%),
+        repeating-linear-gradient( 90deg,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 20px,
+          rgba(0,0,0,.05) 20px,
+          rgba(0,0,0,.05) 40px
+        ),
+        linear-gradient(180deg, #e1b07a, #c8894b);
+      border: 1px solid rgba(60,28,10,.35);
+      box-shadow:
+        0 14px 34px rgba(0,0,0,.20),
+        inset 0 10px 26px rgba(255,255,255,.14),
+        inset 0 -12px 22px rgba(0,0,0,.18);
+      max-width: 100%;
     }
 
+    /* Carved letter slots */
     .cell{
       position:relative;
       width: var(--cellSize);
       height: var(--cellSize);
       border-radius: var(--cellRadius);
-      border: 1px solid rgba(42,28,20,.10);
-      background: linear-gradient(180deg, #ffffff, #fff2e5);
-      color: #23160f;
+      border: 1px solid rgba(60,28,10,.30);
+      background:
+        radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.26), transparent 55%),
+        linear-gradient(180deg, #d6a36b, #b9793c);
+      color: rgba(42,18,6,.92);
       display:flex;
       align-items:center;
       justify-content:center;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing:.4px;
-      font-size: 16px;
+      font-size: clamp(12px, calc(var(--cellSize) * .42), 18px);
       cursor:pointer;
       box-shadow:
-        0 10px 18px rgba(42,28,20,.10),
-        inset 0 2px 0 rgba(255,255,255,.9);
+        inset 0 8px 12px rgba(0,0,0,.20),
+        inset 0 -6px 10px rgba(255,255,255,.18),
+        0 6px 10px rgba(0,0,0,.14);
       transform: translateZ(0);
       transition: transform .08s ease, filter .18s ease, box-shadow .18s ease;
+      text-shadow:
+        0 1px 0 rgba(255,255,255,.22),
+        0 -1px 0 rgba(0,0,0,.25);
     }
+
+    .cell::after{
+      content:"";
+      position:absolute;
+      inset: 3px;
+      border-radius: calc(var(--cellRadius) - 3px);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+      pointer-events:none;
+      opacity:.8;
+    }
+
     .cell:active{ transform: scale(.97); }
+
     .cell.selected{
-      filter: saturate(1.1);
+      filter: saturate(1.2);
       box-shadow:
-        0 14px 26px rgba(15,169,143,.26),
-        inset 0 2px 0 rgba(255,255,255,.92);
-      background: linear-gradient(180deg, rgba(15,169,143,.24), rgba(255,242,229,.96));
-      border-color: rgba(15,169,143,.44);
+        inset 0 8px 12px rgba(0,0,0,.18),
+        inset 0 -6px 10px rgba(255,255,255,.18),
+        0 10px 18px rgba(18,199,162,.32);
+      border-color: rgba(18,199,162,.75);
+      outline: 3px solid rgba(18,199,162,.25);
     }
 
     .cell.found{
-      border-color: rgba(42,28,20,.12);
-      box-shadow: 0 14px 34px rgba(42,28,20,.14), inset 0 2px 0 rgba(255,255,255,.88);
-      background: linear-gradient(180deg, rgba(244,185,58,.40), rgba(255,242,229,.95));
+      border-color: rgba(60,28,10,.30);
+      box-shadow:
+        inset 0 8px 12px rgba(0,0,0,.18),
+        inset 0 -6px 10px rgba(255,255,255,.18),
+        0 14px 26px rgba(0,0,0,.18);
     }
-    .cell.found::after{
+
+    .cell.found::before{
       content:"";
       position:absolute;
-      inset: -2px;
+      inset:-3px;
       border-radius: inherit;
       pointer-events:none;
       background: radial-gradient(closest-side, rgba(255,255,255,.55), transparent 70%);
-      opacity:.0;
+      opacity:0;
       animation: sparkle .85s ease-out;
     }
 
     @keyframes sparkle{
       0%{opacity:0; transform:scale(.9)}
-      45%{opacity:.85; transform:scale(1.02)}
+      45%{opacity:.9; transform:scale(1.02)}
       100%{opacity:0; transform:scale(1.12)}
     }
 
@@ -194,6 +284,12 @@
       display:flex;
       flex-direction:column;
       gap:12px;
+      background:
+        radial-gradient(900px 500px at 50% 0%, rgba(255,255,255,.18), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(0,0,0,.10));
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
     }
 
     .teaWrap{
@@ -206,9 +302,11 @@
       flex:0 0 160px;
       padding: 12px;
       border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,244,232,.62));
-      border:1px solid rgba(42,28,20,.08);
-      box-shadow: 0 14px 28px rgba(42,28,20,.10);
+      background:
+        radial-gradient(700px 280px at 50% 0%, rgba(255,255,255,.26), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.24), rgba(0,0,0,.08));
+      border:1px solid rgba(255,255,255,.20);
+      box-shadow: 0 18px 34px rgba(0,0,0,.18);
       position:relative;
       overflow:hidden;
     }
@@ -217,7 +315,7 @@
       margin:0 0 10px 0;
       font-size: 13px;
       letter-spacing:.3px;
-      color: var(--muted);
+      color: rgba(255,255,255,.92);
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -226,12 +324,13 @@
 
     .percent{
       font-variant-numeric: tabular-nums;
-      color: #3a2a22;
+      color: #1b0f09;
       font-weight: 900;
-      background: rgba(255,255,255,.75);
-      border:1px solid rgba(42,28,20,.08);
+      background: rgba(255,255,255,.82);
+      border:1px solid rgba(0,0,0,.12);
       padding:2px 8px;
       border-radius:999px;
+      box-shadow: 0 8px 14px rgba(0,0,0,.12);
     }
 
     .glassWrap{
@@ -245,14 +344,38 @@
       display:block;
       width: 120px;
       height: 180px;
-      filter: drop-shadow(0 14px 18px rgba(42,28,20,.14));
+      filter:
+        drop-shadow(0 18px 20px rgba(0,0,0,.22))
+        drop-shadow(0 6px 8px rgba(0,0,0,.12));
     }
 
-    .teaGroup{
-      transform-box: fill-box;
-      transform-origin: 50% 100%;
-      transform: scaleY(0);
-      transition: transform .55s cubic-bezier(.22,1,.36,1);
+    /* Tea fill: translate (not scale) so the surface stays natural */
+    .teaLiquid{
+      transform: translateY(200px);
+      transition: transform .85s cubic-bezier(.18,.95,.32,1.02);
+      will-change: transform;
+    }
+
+    .teaSurface{ transform-origin: 60px 60px; }
+
+    .glassWrap.pouring .teaSurface{
+      animation: teaWave .17s ease-in-out infinite alternate;
+    }
+
+    @keyframes teaWave{
+      from{ transform: translateX(-1.2px) scaleX(1.00); opacity:.92; }
+      to{ transform: translateX(1.2px) scaleX(1.02); opacity:1; }
+    }
+
+    .glassWrap.pouring .glassSvg{
+      animation: glassWiggle .45s ease-in-out 1;
+    }
+
+    @keyframes glassWiggle{
+      0%{ transform: translateY(0) rotate(0deg); }
+      30%{ transform: translateY(1px) rotate(-.8deg); }
+      60%{ transform: translateY(-1px) rotate(.6deg); }
+      100%{ transform: translateY(0) rotate(0deg); }
     }
 
     .bubbles{
@@ -288,15 +411,18 @@
       transform: translateX(-50%);
       width: 130px;
       height: 28px;
-      opacity: .95;
+      opacity: .98;
+      filter: drop-shadow(0 10px 10px rgba(0,0,0,.18));
     }
 
     .words{
       padding: 12px;
       border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.66));
-      border:1px solid rgba(42,28,20,.08);
-      box-shadow: 0 14px 28px rgba(42,28,20,.10);
+      background:
+        radial-gradient(900px 420px at 50% 0%, rgba(255,255,255,.22), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.20), rgba(0,0,0,.08));
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 18px 34px rgba(0,0,0,.16);
       min-height: 220px;
     }
 
@@ -304,7 +430,7 @@
       margin:0 0 10px 0;
       font-size: 13px;
       letter-spacing:.3px;
-      color: var(--muted);
+      color: rgba(255,255,255,.92);
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -326,24 +452,26 @@
       gap:10px;
       padding: 10px 12px;
       border-radius: 14px;
-      border: 1px solid rgba(42,28,20,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.50));
-      box-shadow: 0 10px 16px rgba(42,28,20,.08);
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.12);
+      box-shadow: 0 10px 16px rgba(0,0,0,.12);
       align-items:baseline;
+      color: rgba(255,255,255,.94);
     }
 
     .word .tr{ font-weight: 900; letter-spacing:.3px; }
-    .word .ru{ color: var(--muted); font-size: 12px; text-align:right; }
+    .word .ru{ color: rgba(255,255,255,.75); font-size: 12px; text-align:right; }
 
     .word.found{
       opacity:.78;
-      background: linear-gradient(180deg, rgba(15,169,143,.20), rgba(255,255,255,.62));
-      border-color: rgba(15,169,143,.30);
+      background: rgba(18,199,162,.16);
+      border-color: rgba(18,199,162,.40);
     }
+
     .word.found .tr, .word.found .ru{
       text-decoration: line-through;
       text-decoration-thickness: 2px;
-      text-decoration-color: rgba(15,169,143,.68);
+      text-decoration-color: rgba(18,199,162,.80);
     }
 
     .footerHint{
@@ -354,30 +482,38 @@
       flex-wrap:wrap;
       padding: 10px 12px;
       border-radius: 16px;
-      background: rgba(255,255,255,.72);
-      border:1px solid rgba(42,28,20,.07);
-      box-shadow: 0 10px 22px rgba(42,28,20,.08);
-      color: var(--muted);
+      background: rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.20);
+      box-shadow: 0 14px 26px rgba(0,0,0,.14);
+      color: rgba(255,255,255,.88);
       font-size: 12px;
     }
 
     .btn{
       appearance:none;
       border:none;
-      background: linear-gradient(180deg, #E84545, #B91F2B);
+      background: linear-gradient(180deg, #ff4040, #c40e22);
       color: #fff;
       font-weight: 900;
       letter-spacing:.2px;
       padding: 10px 14px;
       border-radius: 14px;
-      box-shadow: 0 16px 26px rgba(232,69,69,.30);
+      box-shadow:
+        0 18px 26px rgba(0,0,0,.18),
+        inset 0 2px 0 rgba(255,255,255,.28),
+        inset 0 -10px 18px rgba(0,0,0,.18);
       cursor:pointer;
       transition: transform .08s ease, filter .15s ease;
     }
+
     .btn:active{ transform: scale(.98); }
+
     .btn.secondary{
-      background: linear-gradient(180deg, #0FA98F, #0B7564);
-      box-shadow: 0 16px 26px rgba(15,169,143,.30);
+      background: linear-gradient(180deg, #12c7a2, #0a7d66);
+      box-shadow:
+        0 18px 26px rgba(0,0,0,.18),
+        inset 0 2px 0 rgba(255,255,255,.22),
+        inset 0 -10px 18px rgba(0,0,0,.18);
     }
 
     .overlay{
@@ -387,35 +523,30 @@
       align-items:center;
       justify-content:center;
       padding: 20px;
-      background: rgba(22,14,10,.35);
+      background: rgba(16,10,8,.55);
       backdrop-filter: blur(10px);
       z-index: 20;
     }
+
     .overlay.show{ display:flex; }
 
     .win{
       width:min(520px, 96vw);
       border-radius: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,253,248,.88));
-      border:1px solid rgba(42,28,20,.12);
-      box-shadow: 0 26px 80px rgba(0,0,0,.28);
+      background:
+        radial-gradient(900px 420px at 50% 0%, rgba(255,255,255,.26), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.20), rgba(0,0,0,.10));
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow: 0 26px 80px rgba(0,0,0,.38);
       padding: 18px;
       text-align:center;
       position:relative;
       overflow:hidden;
-    }
-
-    .win::before{
-      content:"";
-      position:absolute;
-      inset:-60px -60px auto -60px;
-      height:180px;
-      background: radial-gradient(closest-side, rgba(244,185,58,.30), transparent 70%);
-      pointer-events:none;
+      color: rgba(255,255,255,.94);
     }
 
     .win h2{ margin: 6px 0 6px 0; font-size: 22px; letter-spacing:.2px; }
-    .win p{ margin: 0 0 14px 0; color: var(--muted); font-size: 13px; line-height:1.45; }
+    .win p{ margin: 0 0 14px 0; color: rgba(255,255,255,.84); font-size: 13px; line-height:1.45; }
 
     .confetti{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
 
@@ -439,9 +570,20 @@
       ul.wordList{ grid-template-columns: 1fr 1fr; }
     }
 
-    /* Mobile: bigger cells but tighter padding/gap */
+    /* Mobile: fix cropping by deriving cell size from viewport width */
     @media (max-width: 520px){
-      :root{ --cellSize: 38px; --gridGap: 3px; --boardPad: 10px; --gridPad: 6px; }
+      :root{
+        --gridGap: 3px;
+        --boardPad: 12px;
+        --gridPad: 8px;
+        --cellSize: clamp(
+          26px,
+          calc((100vw - (2 * var(--appPadX)) - var(--safeL) - var(--safeR) - (2 * var(--boardPad)) - (2 * var(--gridPad)) - (9 * var(--gridGap))) / 10),
+          38px
+        );
+        --cellRadius: clamp(10px, calc(var(--cellSize) * .28), 14px);
+      }
+
       header{ flex-direction:column; align-items:flex-start; }
       .teaWrap{ flex-direction:row; }
       .teaCard{ flex:0 0 160px; }
@@ -481,56 +623,60 @@
               <span id="pct" class="percent">0%</span>
             </h2>
 
-            <div class="glassWrap" aria-hidden="true">
+            <div id="glassWrap" class="glassWrap" aria-hidden="true">
               <svg class="glassSvg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
                   <linearGradient id="teaGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#E2573A" stop-opacity="0.78"/>
-                    <stop offset="100%" stop-color="#7A1A12" stop-opacity="0.84"/>
+                    <stop offset="0%" stop-color="#F26B3A" stop-opacity="0.90"/>
+                    <stop offset="60%" stop-color="#B42A16" stop-opacity="0.92"/>
+                    <stop offset="100%" stop-color="#66110F" stop-opacity="0.92"/>
                   </linearGradient>
 
                   <linearGradient id="glassShine" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stop-color="rgba(255,255,255,.05)"/>
-                    <stop offset="35%" stop-color="rgba(255,255,255,.45)"/>
-                    <stop offset="75%" stop-color="rgba(255,255,255,.08)"/>
+                    <stop offset="0%" stop-color="rgba(255,255,255,.04)"/>
+                    <stop offset="35%" stop-color="rgba(255,255,255,.52)"/>
+                    <stop offset="75%" stop-color="rgba(255,255,255,.10)"/>
                     <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
                   </linearGradient>
 
                   <clipPath id="glassClip">
-                    <!-- tulip-like Turkish tea glass (armudu) -->
+                    <!-- Turkish tea glass (armudu) -->
                     <path d="M24 16 C18 36 20 54 30 76 C40 92 40 110 33 126 C24 150 18 166 16 178 C18 194 36 198 60 198 C84 198 102 194 104 178 C102 166 96 150 87 126 C80 110 80 92 90 76 C100 54 102 36 96 16 Z"/>
                   </clipPath>
                 </defs>
 
-                <!-- Tea fill (clipped by glass) -->
-                <g id="teaGroup" class="teaGroup" clip-path="url(#glassClip)">
-                  <rect x="0" y="0" width="120" height="200" fill="url(#teaGrad)"/>
-                  <ellipse cx="58" cy="40" rx="40" ry="16" fill="rgba(255,255,255,.18)"/>
+                <!-- Tea fill (clipped by glass). We translate the liquid, not scale it. -->
+                <g id="teaGroup" clip-path="url(#glassClip)">
+                  <g id="teaLiquid" class="teaLiquid">
+                    <rect x="0" y="0" width="120" height="200" fill="url(#teaGrad)"/>
+                    <!-- surface highlight (moves with the liquid) -->
+                    <path class="teaSurface" d="M0 58 C18 52 38 50 60 50 C82 50 102 52 120 58 L120 80 C102 74 82 72 60 72 C38 72 18 74 0 80 Z" fill="rgba(255,255,255,.16)"/>
+                    <path class="teaSurface" d="M6 62 C22 58 40 56 60 56 C80 56 98 58 114 62" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+                  </g>
                 </g>
 
-                <!-- Glass body -->
+                <!-- Glass body (a bit more volumetric) -->
                 <path d="M24 16 C18 36 20 54 30 76 C40 92 40 110 33 126 C24 150 18 166 16 178 C18 194 36 198 60 198 C84 198 102 194 104 178 C102 166 96 150 87 126 C80 110 80 92 90 76 C100 54 102 36 96 16 Z"
-                      fill="rgba(255,255,255,.14)" stroke="rgba(26,15,11,.26)" stroke-width="3"/>
+                      fill="rgba(255,255,255,.16)" stroke="rgba(20,10,6,.38)" stroke-width="3"/>
 
                 <!-- Rim line -->
-                <path d="M28 20 C40 16 52 15 60 15 C68 15 80 16 92 20" fill="none" stroke="rgba(26,15,11,.28)" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M28 20 C40 16 52 15 60 15 C68 15 80 16 92 20" fill="none" stroke="rgba(20,10,6,.38)" stroke-width="2.2" stroke-linecap="round"/>
 
                 <!-- Shine -->
                 <path d="M38 24 C33 54 33 70 39 88 C45 106 42 126 36 144 C30 162 30 174 34 186"
-                      fill="none" stroke="url(#glassShine)" stroke-width="6" stroke-linecap="round" opacity=".92"/>
+                      fill="none" stroke="url(#glassShine)" stroke-width="6" stroke-linecap="round" opacity=".95"/>
               </svg>
 
               <div id="bubbles" class="bubbles" aria-hidden="true"></div>
 
-              <!-- Saucer (optional) -->
               <svg class="saucer" viewBox="0 0 140 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
                   <linearGradient id="sauc" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#F3D7B1"/>
-                    <stop offset="100%" stop-color="#D3A060"/>
+                    <stop offset="0%" stop-color="#F6E0B8"/>
+                    <stop offset="100%" stop-color="#C98B44"/>
                   </linearGradient>
                 </defs>
-                <ellipse cx="70" cy="18" rx="60" ry="10" fill="url(#sauc)" stroke="rgba(138,90,43,.35)" stroke-width="1.6"/>
+                <ellipse cx="70" cy="18" rx="60" ry="10" fill="url(#sauc)" stroke="rgba(70,30,10,.40)" stroke-width="1.6"/>
                 <ellipse cx="70" cy="18" rx="34" ry="5.5" fill="rgba(255,255,255,.14)"/>
               </svg>
             </div>
@@ -570,31 +716,44 @@
       var SIZE = 10;
       var TURKISH_ALPHA = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
 
-      // 10 слов (убрали самые длинные)
+      // Nature theme — 21 words
       var WORDS = [
-        { tr: "orman",  ru: "лес" },
-        { tr: "kır",    ru: "поле" },
-        { tr: "çiçek",  ru: "цветок" },
-        { tr: "böcek",  ru: "жук" },
-        { tr: "ağaç",   ru: "дерево" },
-        { tr: "deniz",  ru: "море" },
-        { tr: "kuş",    ru: "птица" },
-        { tr: "dalga",  ru: "волна" },
-        { tr: "çöl",    ru: "пустыня" },
-        { tr: "plaj",   ru: "пляж" }
+        { tr: "orman",   ru: "лес" },
+        { tr: "kır",     ru: "поле/луг" },
+        { tr: "ot",      ru: "трава" },
+        { tr: "çiçek",   ru: "цветок" },
+        { tr: "hayvan",  ru: "животное" },
+        { tr: "böcek",   ru: "насекомое" },
+        { tr: "ağaç",    ru: "дерево" },
+        { tr: "manzara", ru: "пейзаж" },
+        { tr: "deniz",   ru: "море" },
+        { tr: "okyanus", ru: "океан" },
+        { tr: "yaprak",  ru: "лист" },
+        { tr: "kuş",     ru: "птица" },
+        { tr: "doğal",   ru: "природный" },
+        { tr: "dalga",   ru: "волна" },
+        { tr: "dağ",     ru: "гора" },
+        { tr: "çöl",     ru: "пустыня" },
+        { tr: "şelale",  ru: "водопад" },
+        { tr: "göl",     ru: "озеро" },
+        { tr: "çayır",   ru: "луг" },
+        { tr: "ada",     ru: "остров" },
+        { tr: "plaj",    ru: "пляж" }
       ];
 
       var COLORS = [
-        "#E84545", // nar
-        "#0FA98F", // turkuaz
-        "#F4B93A", // gold
+        "#ff3b3b", // nar
+        "#12c7a2", // turkuaz
+        "#ffcc3b", // gold
         "#7D3C98", // mor
         "#2E86C1", // mavi
-        "#E67E22",
+        "#FF7A00",
         "#16A085",
         "#C0392B",
         "#8E44AD",
-        "#27AE60"
+        "#27AE60",
+        "#E91E63",
+        "#00B0FF"
       ];
 
       var gridEl = document.getElementById("grid");
@@ -605,7 +764,8 @@
       var overlayEl = document.getElementById("overlay");
       var confettiEl = document.getElementById("confetti");
 
-      var teaGroup = document.getElementById("teaGroup");
+      var teaLiquidEl = document.getElementById("teaLiquid");
+      var glassWrapEl = document.getElementById("glassWrap");
 
       var btnNew = document.getElementById("btnNew");
       var btnReset = document.getElementById("btnReset");
@@ -624,6 +784,13 @@
       var path = []; // {r,c}
       var dir = null; // {dr,dc}
 
+      // Tea animation state
+      var lastTeaPct = 0;
+
+      // Word occurrences on this board (for per-letter "correct" click)
+      // wordOcc[wordUp] = [ [ {r,c}, ... ], ... ]  (each occurrence in the word's reading order)
+      var wordOcc = {};
+
       // Web Audio
       var audioCtx = null;
       var audioArmed = false;
@@ -641,7 +808,6 @@
       }
 
       function randInt(n){ return Math.floor(Math.random() * n); }
-
       function pick(arr){ return arr[randInt(arr.length)]; }
 
       function normStep(dr, dc){
@@ -679,10 +845,11 @@
           wordsUpper.push({ tr: w.tr, ru: w.ru, up: upTR(w.tr) });
         }
 
+        // place longer first
         wordsUpper.sort(function(a,b){ return b.up.length - a.up.length; });
 
         var attempt;
-        for(attempt=0; attempt<140; attempt++){
+        for(attempt=0; attempt<320; attempt++){
           var b = makeEmptyBoard();
           var okAll = true;
 
@@ -692,7 +859,7 @@
             var placed = false;
             var t;
 
-            for(t=0; t<650; t++){
+            for(t=0; t<1400; t++){
               var d = pick(directions);
               var len = ww.up.length;
 
@@ -743,8 +910,9 @@
 
         // fallback (should not happen)
         var fb = makeEmptyBoard();
-        for(r=0; r<SIZE; r++){
-          for(c=0; c<SIZE; c++) fb[r][c] = TURKISH_ALPHA.charAt(randInt(TURKISH_ALPHA.length));
+        var r2, c2;
+        for(r2=0; r2<SIZE; r2++){
+          for(c2=0; c2<SIZE; c2++) fb[r2][c2] = TURKISH_ALPHA.charAt(randInt(TURKISH_ALPHA.length));
         }
         return fb;
       }
@@ -783,7 +951,7 @@
           li.innerHTML = '<span class="tr">' + w.tr + '</span><span class="ru">' + w.ru + '</span>';
           wordListEl.appendChild(li);
         }
-        updateUI();
+        updateUI(true);
       }
 
       function foundHas(wordUp){ return foundMap[wordUp] === 1; }
@@ -800,21 +968,41 @@
         foundN = 0;
       }
 
-      function updateTeaFill(pct){
-        if(!teaGroup) return;
+      function setPouring(on){
+        if(!glassWrapEl) return;
+        if(on) glassWrapEl.classList.add("pouring");
+        else glassWrapEl.classList.remove("pouring");
+      }
+
+      function updateTeaFill(pct, silent){
+        if(!teaLiquidEl) return;
         var s = pct / 100;
         if(s < 0) s = 0;
         if(s > 1) s = 1;
-        teaGroup.style.transform = "scaleY(" + s + ")";
+
+        // translate from bottom (200px) to top (0px)
+        var y = Math.round((1 - s) * 200);
+        teaLiquidEl.style.transform = "translateY(" + y + "px)";
+
+        if(!silent && pct > lastTeaPct){
+          // pouring FX
+          setPouring(true);
+          playPourSound(pct - lastTeaPct);
+          (function(){
+            var t = setTimeout(function(){ setPouring(false); clearTimeout(t); }, 520);
+          })();
+        }
+
+        lastTeaPct = pct;
       }
 
-      function updateUI(){
+      function updateUI(silentTea){
         var total = WORDS.length;
         foundCountEl.textContent = foundN + "/" + total;
 
         var p = total ? Math.round((foundN / total) * 100) : 0;
         pctEl.textContent = p + "%";
-        updateTeaFill(p);
+        updateTeaFill(p, !!silentTea);
 
         bubblesEl.style.opacity = foundN ? "1" : "0";
 
@@ -878,9 +1066,13 @@
         return s;
       }
 
+      function reverseStr(u){
+        return u.split("").reverse().join("");
+      }
+
       function isKnownWord(s){
         var u = s;
-        var r = u.split("").reverse().join("");
+        var r = reverseStr(u);
         var i;
         for(i=0; i<WORDS.length; i++){
           var wup = upTR(WORDS[i].tr);
@@ -888,6 +1080,78 @@
           if(wup === r) return r;
         }
         return null;
+      }
+
+      function buildWordOccurrences(b){
+        var occ = {};
+        var i;
+        for(i=0; i<WORDS.length; i++){
+          var wup = upTR(WORDS[i].tr);
+          var rev = reverseStr(wup);
+          var out = [];
+          var len = wup.length;
+
+          // horizontal (scan left->right)
+          var r, c, j;
+          for(r=0; r<SIZE; r++){
+            for(c=0; c<=SIZE-len; c++){
+              var s = "";
+              var coords = [];
+              for(j=0; j<len; j++){
+                s += b[r][c+j];
+                coords.push({r:r, c:(c+j)});
+              }
+              if(s === wup) out.push(coords);
+              else if(s === rev) out.push(coords.slice().reverse());
+            }
+          }
+
+          // vertical (scan top->bottom)
+          for(c=0; c<SIZE; c++){
+            for(r=0; r<=SIZE-len; r++){
+              s = "";
+              coords = [];
+              for(j=0; j<len; j++){
+                s += b[r+j][c];
+                coords.push({r:(r+j), c:c});
+              }
+              if(s === wup) out.push(coords);
+              else if(s === rev) out.push(coords.slice().reverse());
+            }
+          }
+
+          occ[wup] = out;
+        }
+        return occ;
+      }
+
+      function pathIsPrefixOf(pathCells, seqCells){
+        if(pathCells.length > seqCells.length) return false;
+        var i;
+        for(i=0; i<pathCells.length; i++){
+          if(pathCells[i].r !== seqCells[i].r) return false;
+          if(pathCells[i].c !== seqCells[i].c) return false;
+        }
+        return true;
+      }
+
+      function isCorrectPathSoFar(){
+        if(!path || !path.length) return false;
+        var i, k;
+        for(i=0; i<WORDS.length; i++){
+          var wup = upTR(WORDS[i].tr);
+          if(foundHas(wup)) continue;
+          var arr = wordOcc[wup];
+          if(!arr || !arr.length) continue;
+          for(k=0; k<arr.length; k++){
+            var seq = arr[k];
+            if(pathIsPrefixOf(path, seq)) return true;
+            // allow starting from the other end
+            var revSeq = seq.slice().reverse();
+            if(pathIsPrefixOf(path, revSeq)) return true;
+          }
+        }
+        return false;
       }
 
       function hexToRgba(hex, a){
@@ -923,9 +1187,9 @@
 
       function fireConfetti(){
         confettiEl.innerHTML = "";
-        var colors = ["#E84545", "#0FA98F", "#F4B93A", "#2E86C1", "#FF7A00", "#8E44AD"]; 
+        var colors = ["#ff3b3b", "#12c7a2", "#ffcc3b", "#2E86C1", "#FF7A00", "#8E44AD"]; 
         var i;
-        for(i=0; i<42; i++){
+        for(i=0; i<44; i++){
           var p = document.createElement("div");
           p.className = "piece";
           p.style.left = (Math.random()*100) + "%";
@@ -979,7 +1243,8 @@
           words[i].removeAttribute("style");
         }
 
-        updateUI();
+        lastTeaPct = 0;
+        updateUI(true);
         popBubbles();
       }
 
@@ -988,6 +1253,7 @@
         hideWin();
         clearSelection();
         board = generateBoard();
+        wordOcc = buildWordOccurrences(board);
         renderBoard();
         renderWords();
         popBubbles();
@@ -1018,9 +1284,13 @@
           if(!el) continue;
           el.classList.remove("selected");
           el.classList.add("found");
-          el.style.background = "linear-gradient(180deg, " + hexToRgba(color,.46) + ", rgba(255,242,229,.97))";
-          el.style.borderColor = hexToRgba(color,.58);
-          el.style.boxShadow = "0 14px 30px " + hexToRgba(color,.24) + ", inset 0 2px 0 rgba(255,255,255,.9)";
+          el.style.background = "radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.25), transparent 55%), linear-gradient(180deg, " + hexToRgba(color,.64) + ", rgba(200,120,60,.82))";
+          el.style.borderColor = hexToRgba(color,.70);
+          el.style.outline = "3px solid " + hexToRgba(color,.20);
+          el.style.boxShadow =
+            "inset 0 8px 12px rgba(0,0,0,.18), " +
+            "inset 0 -6px 10px rgba(255,255,255,.16), " +
+            "0 14px 24px " + hexToRgba(color,.20);
         }
 
         // Highlight the word item
@@ -1035,7 +1305,7 @@
           }
         }
 
-        updateUI();
+        updateUI(false);
         playSuccessSound();
         popBubbles();
 
@@ -1057,6 +1327,7 @@
         if(path.length === 0){
           path.push(cell);
           setSelectedVisual();
+          if(isCorrectPathSoFar()) playTapSound(0.65);
           return;
         }
 
@@ -1073,6 +1344,7 @@
           dir = step;
           path.push(cell);
           setSelectedVisual();
+          if(isCorrectPathSoFar()) playTapSound(0.72);
           return;
         }
 
@@ -1084,10 +1356,11 @@
 
         path.push(cell);
         setSelectedVisual();
+        if(isCorrectPathSoFar()) playTapSound(0.78);
       }
 
       function finalizeSelection(){
-        if(path.length < 3){
+        if(path.length < 2){
           clearSelection();
           return;
         }
@@ -1111,6 +1384,122 @@
         if(!audioCtx) return;
         if(audioCtx.state === "suspended"){
           try{ audioCtx.resume(); } catch(e){}
+        }
+      }
+
+      function playTapSound(str){
+        if(!audioCtx) return;
+        var t0 = audioCtx.currentTime;
+        var strength = (typeof str === "number") ? str : 0.7;
+
+        var master = audioCtx.createGain();
+        master.gain.setValueAtTime(0.0001, t0);
+        master.gain.exponentialRampToValueAtTime(0.18 * strength, t0 + 0.008);
+        master.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.06);
+        master.connect(audioCtx.destination);
+
+        // short "pop": sine + tiny noise click
+        var o = audioCtx.createOscillator();
+        o.type = "sine";
+        o.frequency.setValueAtTime(420 + 240 * strength, t0);
+        o.frequency.exponentialRampToValueAtTime(220 + 120 * strength, t0 + 0.05);
+
+        var g = audioCtx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(0.38, t0 + 0.008);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.05);
+
+        o.connect(g);
+        g.connect(master);
+        o.start(t0);
+        o.stop(t0 + 0.06);
+
+        var noiseBuf = audioCtx.createBuffer(1, Math.floor(audioCtx.sampleRate * 0.02), audioCtx.sampleRate);
+        var data = noiseBuf.getChannelData(0);
+        var i;
+        for(i=0; i<data.length; i++) data[i] = (Math.random()*2-1) * (1 - i/data.length);
+
+        var ns = audioCtx.createBufferSource();
+        ns.buffer = noiseBuf;
+        var hp = audioCtx.createBiquadFilter();
+        hp.type = "highpass";
+        hp.frequency.setValueAtTime(2500, t0);
+
+        var ng = audioCtx.createGain();
+        ng.gain.setValueAtTime(0.0001, t0);
+        ng.gain.exponentialRampToValueAtTime(0.10 * strength, t0 + 0.003);
+        ng.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.02);
+
+        ns.connect(hp);
+        hp.connect(ng);
+        ng.connect(master);
+        ns.start(t0);
+        ns.stop(t0 + 0.02);
+      }
+
+      function playPourSound(deltaPct){
+        if(!audioCtx) return;
+        var t0 = audioCtx.currentTime;
+        var dur = 0.20 + Math.min(0.55, (deltaPct || 6) / 60);
+
+        var master = audioCtx.createGain();
+        master.gain.setValueAtTime(0.0001, t0);
+        master.gain.exponentialRampToValueAtTime(0.20, t0 + 0.02);
+        master.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        master.connect(audioCtx.destination);
+
+        // Pink-ish noise made from filtered white noise
+        var noiseBuf = audioCtx.createBuffer(1, Math.floor(audioCtx.sampleRate * dur), audioCtx.sampleRate);
+        var data = noiseBuf.getChannelData(0);
+        var i;
+        for(i=0; i<data.length; i++){
+          var t = i / data.length;
+          data[i] = (Math.random()*2-1) * (0.70 - 0.55*t);
+        }
+
+        var src = audioCtx.createBufferSource();
+        src.buffer = noiseBuf;
+
+        var bp = audioCtx.createBiquadFilter();
+        bp.type = "bandpass";
+        bp.frequency.setValueAtTime(900, t0);
+        bp.frequency.exponentialRampToValueAtTime(1200, t0 + dur);
+        bp.Q.setValueAtTime(0.9, t0);
+
+        var lp = audioCtx.createBiquadFilter();
+        lp.type = "lowpass";
+        lp.frequency.setValueAtTime(3800, t0);
+
+        var g = audioCtx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(0.65, t0 + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+        src.connect(bp);
+        bp.connect(lp);
+        lp.connect(g);
+        g.connect(master);
+
+        src.start(t0);
+        src.stop(t0 + dur);
+
+        // a couple of tiny "glug" blips
+        var n;
+        for(n=0; n<2; n++){
+          var dt = 0.06 + n * (dur * 0.40);
+          var o = audioCtx.createOscillator();
+          o.type = "sine";
+          o.frequency.setValueAtTime(140 + n*30, t0 + dt);
+
+          var og = audioCtx.createGain();
+          og.gain.setValueAtTime(0.0001, t0 + dt);
+          og.gain.exponentialRampToValueAtTime(0.16, t0 + dt + 0.01);
+          og.gain.exponentialRampToValueAtTime(0.0001, t0 + dt + 0.08);
+
+          o.connect(og);
+          og.connect(master);
+          o.start(t0 + dt);
+          o.stop(t0 + dt + 0.09);
         }
       }
 
