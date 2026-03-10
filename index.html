@@ -25,7 +25,6 @@
       --radius: 22px;
 
       /* Grid */
-      --cols: 10;
       --gridGap: 6px;
       --cellRadius: 14px;
       --cellSize: 42px;
@@ -646,8 +645,8 @@
         --boardPad: 12px;
         --gridPad: 8px;
         --cellSize: clamp(
-          22px,
-          calc((100vw - (2 * var(--appPadX)) - var(--safeL) - var(--safeR) - (2 * var(--boardPad)) - (2 * var(--gridPad)) - ((var(--cols) - 1) * var(--gridGap))) / var(--cols)),
+          26px,
+          calc((100vw - (2 * var(--appPadX)) - var(--safeL) - var(--safeR) - (2 * var(--boardPad)) - (2 * var(--gridPad)) - (9 * var(--gridGap))) / 10),
           38px
         );
         --cellRadius: clamp(10px, calc(var(--cellSize) * .28), 14px);
@@ -664,54 +663,7 @@
     @media (prefers-reduced-motion: reduce){
       *{ animation: none !important; transition: none !important; }
     }
-  
-
-    /* v5b: start/leaderboard modals */
-    .win.modal{ text-align:left; }
-
-    .formGrid{ display:grid; gap:12px; margin: 10px 0 14px 0; }
-    .fieldLabel{ font-size:12px; color: rgba(255,255,255,.86); margin-bottom:6px; }
-    .textInput{
-      width:100%;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.22);
-      background: rgba(255,255,255,.12);
-      color: rgba(255,255,255,.96);
-      padding: 10px 12px;
-      outline: none;
-      font-weight: 800;
-      letter-spacing: .2px;
-      box-shadow: 0 14px 26px rgba(0,0,0,.14);
-    }
-    .textInput::placeholder{ color: rgba(255,255,255,.55); font-weight:700; }
-
-    .segRow{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-start; }
-    .optBtn{
-      appearance:none;
-      border:none;
-      border-radius: 14px;
-      padding: 10px 12px;
-      cursor:pointer;
-      font-weight: 900;
-      letter-spacing:.2px;
-      color: rgba(255,255,255,.94);
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.18);
-      box-shadow: 0 12px 18px rgba(0,0,0,.14);
-    }
-    .optBtn.on{ outline: 3px solid rgba(18,199,162,.28); border-color: rgba(18,199,162,.55); background: rgba(18,199,162,.14); }
-
-    .lbWrap{
-      margin-top: 10px;
-      border-radius: 16px;
-      padding: 10px 12px;
-      background: rgba(0,0,0,.16);
-      border: 1px solid rgba(255,255,255,.16);
-    }
-    .lbWrap ol{ margin:0; padding: 0 0 0 18px; }
-    .lbWrap li{ margin: 8px 0; color: rgba(255,255,255,.92); font-size: 13px; }
-    .lbMeta{ color: rgba(255,255,255,.72); font-size: 12px; }
-</style>
+  </style>
 </head>
 <body>
   <div class="app">
@@ -720,16 +672,11 @@
         <div class="brand" aria-label="DOĞA">DOĞA</div>
         <h1>Сетка слов на турецком</h1>
         <div class="sub">
-          <div id="pillMode" class="pill">Спокойный режим — без таймера</div>
-          <div id="pillTimer" class="pill" style="display:none">00:00</div>
-          <div id="pillNick" class="pill">Ник: —</div>
-          <div id="pillHint" class="pill">Выделяй слова свайпом по буквам</div>
+          <div class="pill">Спокойный режим — без таймера</div>
+          <div class="pill">Выделяй слова свайпом по буквам</div>
         </div>
       </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-        <button id="btnLeaderboard" class="btn secondary" type="button">Таблица</button>
-        <button id="btnNew" class="btn" type="button">Новая игра</button>
-      </div>
+      <button id="btnNew" class="btn" type="button">Новая сетка</button>
     </header>
 
     <div class="layout">
@@ -831,66 +778,16 @@
         <button id="btnClose" class="btn secondary" type="button">Закрыть</button>
       </div>
     </div>
-
-
-  <div id="startOverlay" class="overlay" aria-hidden="true">
-    <div class="win modal" role="dialog" aria-modal="true" aria-label="Перед игрой">
-      <h2 style="margin-top:2px">Перед игрой</h2>
-      <p style="margin-bottom:10px">Никнейм, режим и сложность — и поехали.</p>
-
-      <div class="formGrid">
-        <div>
-          <div class="fieldLabel">Никнейм</div>
-          <input id="nickInput" class="textInput" type="text" autocomplete="nickname" maxlength="16" placeholder="Например: Anton" />
-        </div>
-
-        <div>
-          <div class="fieldLabel">Режим</div>
-          <div class="segRow" role="group" aria-label="Выбор режима">
-            <button id="modeTea" class="optBtn" type="button">Çay Keyfi</button>
-            <button id="modeRace" class="optBtn" type="button">Yarış</button>
-          </div>
-        </div>
-
-        <div>
-          <div class="fieldLabel">Сложность</div>
-          <div class="segRow" role="group" aria-label="Выбор сложности">
-            <button id="diffA1" class="optBtn" type="button">A1 (легко)</button>
-            <button id="diffB1" class="optBtn" type="button">B1 (сложнее)</button>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-        <button id="btnStart" class="btn" type="button">Начать</button>
-        <button id="btnStartCancel" class="btn secondary" type="button">Отмена</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="lbOverlay" class="overlay" aria-hidden="true">
-    <div class="win modal" role="dialog" aria-modal="true" aria-label="Таблица лидеров">
-      <h2 style="margin-top:2px">Таблица лидеров</h2>
-      <p style="margin-bottom:10px">Топ‑10 по времени (все режимы и сложности). Быстрее — выше.</p>
-
-      <div class="lbWrap">
-        <ol id="lbList"></ol>
-        <div id="lbEmpty" class="lbMeta" style="display:none">Пока пусто. Сыграй одну партию — и ты уже в таблице.</div>
-      </div>
-
-      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
-        <button id="btnLbClose" class="btn secondary" type="button">Закрыть</button>
-      </div>
-    </div>
-  </div>
   </div>
 
   <script>
     window.onload = function(){
+      var SIZE = 10;
       var TURKISH_ALPHA = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
 
-      // A1: current easy pool
-      var A1_WORDS = [
+      // Nature theme — combined pool. Each new game picks up to 20 words.
+      var ALL_WORDS = [
+        // Original
         { tr: "orman",   ru: "лес" },
         { tr: "kır",     ru: "поле/луг" },
         { tr: "ot",      ru: "трава" },
@@ -913,6 +810,7 @@
         { tr: "ada",     ru: "остров" },
         { tr: "plaj",    ru: "пляж" },
 
+        // New
         { tr: "toprak",   ru: "почва" },
         { tr: "nehir",    ru: "река" },
         { tr: "dere",     ru: "ручей" },
@@ -936,57 +834,15 @@
         { tr: "ışık",     ru: "свет" }
       ];
 
-      // B1: intermediate pool (Feature 5)
-      var B1_WORDS = [
-        { tr: "nehir",         ru: "река" },
-        { tr: "fırtına",       ru: "шторм" },
-        { tr: "deprem",        ru: "землетрясение" },
-        { tr: "gökkuşağı",     ru: "радуга" },
-        { tr: "şelale",        ru: "водопад" },
-        { tr: "volkan",        ru: "вулкан" },
-        { tr: "okyanus",       ru: "океан" },
-        { tr: "buzul",         ru: "ледник" },
-        { tr: "çöl",           ru: "пустыня" },
-        { tr: "orman",         ru: "лес" },
-        { tr: "kayalık",       ru: "скалистая местность" },
-        { tr: "yarımada",      ru: "полуостров" },
-        { tr: "boğaz",         ru: "пролив" },
-        { tr: "mağara",        ru: "пещера" },
-        { tr: "vadi",          ru: "долина" },
-        { tr: "uçurum",        ru: "обрыв" },
-        { tr: "buzdağı",       ru: "айсберг" },
-        { tr: "şafak",         ru: "рассвет" },
-        { tr: "alacakaranlık", ru: "сумерки" },
-        { tr: "kasırga",       ru: "ураган" },
-        { tr: "tsunami",       ru: "цунами" },
-        { tr: "pınar",         ru: "родник" },
-        { tr: "gölet",         ru: "пруд" },
-        { tr: "bataklık",      ru: "болото" },
-        { tr: "kıyı",          ru: "побережье" },
-        { tr: "yamaç",         ru: "склон" },
-        { tr: "doruk",         ru: "вершина" },
-        { tr: "ova",           ru: "равнина" },
-        { tr: "plato",         ru: "плато" },
-        { tr: "kıta",          ru: "континент" }
-      ];
-
-      var LS_NICK = "twg_nick_v5b";
-      var LS_CFG  = "twg_cfg_v5b";
-      var LS_LB   = "twg_lb_v5b";
-
-      var difficulty = "A1"; // A1 | B1
-      var mode = "tea";      // tea | race
-      var nickname = "";
-
-      var SIZE = 10;
+      // Active words for the current board
       var WORDS = [];
 
       var COLORS = [
-        "#ff3b3b",
-        "#12c7a2",
-        "#ffcc3b",
-        "#7D3C98",
-        "#2E86C1",
+        "#ff3b3b", // nar
+        "#12c7a2", // turkuaz
+        "#ffcc3b", // gold
+        "#7D3C98", // mor
+        "#2E86C1", // mavi
         "#FF7A00",
         "#16A085",
         "#C0392B",
@@ -1011,44 +867,32 @@
       var btnReset = document.getElementById("btnReset");
       var btnAgain = document.getElementById("btnAgain");
       var btnClose = document.getElementById("btnClose");
-      var btnLeaderboard = document.getElementById("btnLeaderboard");
 
-      var pillModeEl = document.getElementById("pillMode");
-      var pillTimerEl = document.getElementById("pillTimer");
-      var pillNickEl = document.getElementById("pillNick");
-
-      var startOverlayEl = document.getElementById("startOverlay");
-      var nickInputEl = document.getElementById("nickInput");
-      var modeTeaBtn = document.getElementById("modeTea");
-      var modeRaceBtn = document.getElementById("modeRace");
-      var diffA1Btn = document.getElementById("diffA1");
-      var diffB1Btn = document.getElementById("diffB1");
-      var btnStart = document.getElementById("btnStart");
-      var btnStartCancel = document.getElementById("btnStartCancel");
-
-      var lbOverlayEl = document.getElementById("lbOverlay");
-      var lbListEl = document.getElementById("lbList");
-      var lbEmptyEl = document.getElementById("lbEmpty");
-      var btnLbClose = document.getElementById("btnLbClose");
-
+      // Board state
       var board = [];
+
+      // Found words: simple map for max compatibility
       var foundMap = {};
       var foundN = 0;
 
+      // Selection state
       var selecting = false;
-      var path = [];
-      var dir = null;
+      var path = []; // {r,c}
+      var dir = null; // {dr,dc}
 
+      // Tea animation state
       var lastTeaPct = 0;
+
+      // Word occurrences on this board (for per-letter "correct" click)
+      // wordOcc[wordUp] = [ [ {r,c}, ... ], ... ]  (each occurrence in the word's reading order)
       var wordOcc = {};
 
+      // Web Audio
       var audioCtx = null;
       var audioArmed = false;
 
-      var gameStartMs = 0;
-      var timerInt = null;
-
       function upTR(s){
+        // Manual Turkish uppercase — iOS Safari toLocaleUpperCase('tr-TR') can fail
         var map = {'ı':'I','i':'İ','ş':'Ş','ç':'Ç','ö':'Ö','ü':'Ü','ğ':'Ğ','â':'Â'};
         var out = "";
         var i;
@@ -1059,198 +903,8 @@
         return out;
       }
 
-      function clamp(n, a, b){ return (n < a) ? a : (n > b ? b : n); }
       function randInt(n){ return Math.floor(Math.random() * n); }
       function pick(arr){ return arr[randInt(arr.length)]; }
-
-      function fmtTime(ms){
-        if(!ms || ms < 0) ms = 0;
-        var sec = Math.floor(ms / 1000);
-        var m = Math.floor(sec / 60);
-        var s = sec % 60;
-        var mm = (m < 10 ? "0" : "") + m;
-        var ss = (s < 10 ? "0" : "") + s;
-        return mm + ":" + ss;
-      }
-
-      function escapeHtml(t){
-        return String(t || "")
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/\"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-      }
-
-      function openOverlay(el){
-        if(!el) return;
-        el.classList.add("show");
-        el.setAttribute("aria-hidden", "false");
-      }
-
-      function closeOverlay(el){
-        if(!el) return;
-        el.classList.remove("show");
-        el.setAttribute("aria-hidden", "true");
-      }
-
-      function setCols(n){
-        try{ document.documentElement.style.setProperty('--cols', String(n)); } catch(e){}
-      }
-
-      function pxFirst(v){
-        if(!v) return 0;
-        var s = String(v).trim().split(" ")[0];
-        var n = parseFloat(s);
-        return isNaN(n) ? 0 : n;
-      }
-
-      function adjustCellSize(){
-        if(!gridEl) return;
-        var rect = gridEl.getBoundingClientRect();
-        if(!rect || !rect.width) return;
-        var st = window.getComputedStyle(gridEl);
-        var pad = pxFirst(st.paddingLeft) + pxFirst(st.paddingRight);
-        var gap = pxFirst(st.gap) || pxFirst(st.columnGap) || 6;
-        var inner = rect.width - pad;
-        var cell = Math.floor((inner - gap * (SIZE - 1)) / SIZE);
-        cell = clamp(cell, 22, 42);
-        try{
-          document.documentElement.style.setProperty('--cellSize', cell + 'px');
-          document.documentElement.style.setProperty('--cellRadius', clamp(Math.round(cell * 0.28), 10, 14) + 'px');
-        } catch(e){}
-      }
-
-      function updateHeaderPills(){
-        var d = (difficulty === 'B1') ? 'B1' : 'A1';
-        var m = (mode === 'race') ? 'Yarış' : 'Çay Keyfi';
-        if(pillModeEl) pillModeEl.textContent = m + ' • ' + d;
-        if(pillNickEl) pillNickEl.textContent = nickname ? ('Ник: ' + nickname) : 'Ник: —';
-        if(pillTimerEl) pillTimerEl.style.display = (mode === 'race') ? '' : 'none';
-      }
-
-      function syncStartUI(){
-        if(modeTeaBtn){
-          modeTeaBtn.classList.toggle('on', mode === 'tea');
-          modeRaceBtn.classList.toggle('on', mode === 'race');
-        }
-        if(diffA1Btn){
-          diffA1Btn.classList.toggle('on', difficulty === 'A1');
-          diffB1Btn.classList.toggle('on', difficulty === 'B1');
-        }
-        if(nickInputEl) nickInputEl.value = nickname || '';
-      }
-
-      function loadCfg(){
-        try{ nickname = (localStorage.getItem(LS_NICK) || '').trim(); } catch(e){ nickname = ''; }
-        try{
-          var cfg = JSON.parse(localStorage.getItem(LS_CFG) || '{}');
-          if(cfg && (cfg.difficulty === 'A1' || cfg.difficulty === 'B1')) difficulty = cfg.difficulty;
-          if(cfg && (cfg.mode === 'tea' || cfg.mode === 'race')) mode = cfg.mode;
-        } catch(e){}
-      }
-
-      function saveCfg(){
-        try{ localStorage.setItem(LS_NICK, nickname || ''); } catch(e){}
-        try{ localStorage.setItem(LS_CFG, JSON.stringify({difficulty:difficulty, mode:mode})); } catch(e){}
-      }
-
-      function loadLeaderboard(){
-        try{
-          var arr = JSON.parse(localStorage.getItem(LS_LB) || '[]');
-          return Array.isArray(arr) ? arr : [];
-        } catch(e){ return []; }
-      }
-
-      function saveLeaderboard(arr){
-        try{ localStorage.setItem(LS_LB, JSON.stringify(arr || [])); } catch(e){}
-      }
-
-      function scoreFromTime(ms, words){
-        var w = words || 0;
-        var s = Math.floor((ms || 0) / 1000);
-        return Math.max(0, Math.round(w * 1000 - s * 25));
-      }
-
-      function addScoreToLeaderboard(entry){
-        var arr = loadLeaderboard();
-        arr.push(entry);
-        arr = arr.filter(function(x){ return x && x.nickname && typeof x.ms === 'number'; });
-        arr.sort(function(a,b){
-          if(a.ms !== b.ms) return a.ms - b.ms;
-          return (a.ts || 0) - (b.ts || 0);
-        });
-        if(arr.length > 10) arr = arr.slice(0, 10);
-        saveLeaderboard(arr);
-      }
-
-      function renderLeaderboard(){
-        if(!lbListEl) return;
-        var arr = loadLeaderboard();
-        lbListEl.innerHTML = '';
-        if(lbEmptyEl) lbEmptyEl.style.display = arr.length ? 'none' : '';
-        var i;
-        for(i=0; i<arr.length; i++){
-          var it = arr[i];
-          var li = document.createElement('li');
-          var t = fmtTime(it.ms);
-          var meta = (it.mode === 'race' ? 'Yarış' : 'Çay') + ' • ' + (it.difficulty || '?') + ' • ' + (it.words || 0) + ' kelime';
-          if(it.mode === 'race' && typeof it.score === 'number') meta += ' • skor ' + it.score;
-          li.innerHTML = '<strong>' + escapeHtml(it.nickname) + '</strong> — ' + t + '<div class="lbMeta">' + escapeHtml(meta) + '</div>';
-          lbListEl.appendChild(li);
-        }
-      }
-
-      function startTimer(){
-        stopTimer();
-        if(pillTimerEl) pillTimerEl.textContent = '00:00';
-        timerInt = setInterval(function(){
-          if(pillTimerEl) pillTimerEl.textContent = fmtTime(Date.now() - gameStartMs);
-        }, 250);
-      }
-
-      function stopTimer(){
-        if(timerInt){ clearInterval(timerInt); timerInt = null; }
-      }
-
-      function resetTimer(){
-        gameStartMs = Date.now();
-        if(mode === 'race') startTimer();
-        else stopTimer();
-      }
-
-      function openStartOverlay(){
-        syncStartUI();
-        openOverlay(startOverlayEl);
-        if(nickInputEl){
-          try{ nickInputEl.focus(); nickInputEl.select(); } catch(e){}
-        }
-      }
-
-      function openLbOverlay(){
-        renderLeaderboard();
-        openOverlay(lbOverlayEl);
-      }
-
-      function applyDifficultyAndSize(){
-        SIZE = (difficulty === 'B1') ? 14 : 10;
-        setCols(SIZE);
-      }
-
-      function startGame(){
-        nickname = (nickInputEl && nickInputEl.value ? nickInputEl.value : nickname).trim();
-        if(!nickname){
-          if(nickInputEl){ nickInputEl.placeholder = 'Нужен никнейм :)'; try{ nickInputEl.focus(); } catch(e){} }
-          return;
-        }
-        saveCfg();
-        applyDifficultyAndSize();
-        updateHeaderPills();
-        newGame();
-        resetTimer();
-        closeOverlay(startOverlayEl);
-        setTimeout(adjustCellSize, 0);
-      }
 
       function normStep(dr, dc){
         var sdr = (dr === 0) ? 0 : (dr > 0 ? 1 : -1);
@@ -1294,6 +948,7 @@
       }
 
       function generateBoard(words){
+        // No diagonals
         var directions = [
           {dr: 1, dc: 0}, {dr: -1, dc: 0},
           {dr: 0, dc: 1}, {dr: 0, dc: -1}
@@ -1306,10 +961,12 @@
           wordsUpper.push({ tr: w.tr, ru: w.ru, up: upTR(w.tr) });
         }
 
+        // place longer first
         wordsUpper.sort(function(a,b){ return b.up.length - a.up.length; });
 
-        var maxAttempts = 220 + wordsUpper.length * 32 + SIZE * 12;
-        var triesPerWord = 1600 + SIZE * 80;
+        // More words => more retries (still fast enough for 10x10)
+        var maxAttempts = 260 + wordsUpper.length * 28;
+        var triesPerWord = 2200;
 
         var attempt;
         for(attempt=0; attempt<maxAttempts; attempt++){
@@ -1358,10 +1015,13 @@
 
           if(!okAll) continue;
 
+          // Fill empty
           var r, c;
           for(r=0; r<SIZE; r++){
             for(c=0; c<SIZE; c++){
-              if(b[r][c] === "") b[r][c] = TURKISH_ALPHA.charAt(randInt(TURKISH_ALPHA.length));
+              if(b[r][c] === ""){
+                b[r][c] = TURKISH_ALPHA.charAt(randInt(TURKISH_ALPHA.length));
+              }
             }
           }
 
@@ -1371,31 +1031,31 @@
         return null;
       }
 
-      function poolForDifficulty(){
-        return (difficulty === 'B1') ? B1_WORDS.slice() : A1_WORDS.slice();
-      }
-
       function pickWordsAndBoard(){
-        var pool = poolForDifficulty();
+        var pool = ALL_WORDS.slice();
         shuffleInPlace(pool);
 
-        var maxN = (difficulty === 'B1') ? 18 : 20;
-        var minN = (difficulty === 'B1') ? 12 : 10;
+        var maxN = 20;
         if(maxN > pool.length) maxN = pool.length;
 
         var n;
-        for(n=maxN; n>=minN; n--){
+        for(n=maxN; n>=10; n--){
           var candidate = pool.slice(0, n);
           var b = generateBoard(candidate);
-          if(b){ WORDS = candidate; return b; }
+          if(b){
+            WORDS = candidate;
+            return b;
+          }
         }
 
-        WORDS = pool.slice(0, minN);
+        // Last resort
+        WORDS = pool.slice(0, 10);
         var bb = generateBoard(WORDS);
         return bb ? bb : generateRandomBoard();
       }
 
       function renderBoard(){
+
         gridEl.innerHTML = "";
         gridEl.style.gridTemplateColumns = "repeat(" + SIZE + ", var(--cellSize))";
 
@@ -1426,15 +1086,25 @@
           li.className = "word";
           li.setAttribute("data-word", upTR(w.tr));
           li.setAttribute("data-idx", String(i));
-          li.innerHTML = '<span class="tr">' + escapeHtml(w.tr) + '</span><span class="ru">' + escapeHtml(w.ru) + '</span>';
+          li.innerHTML = '<span class="tr">' + w.tr + '</span><span class="ru">' + w.ru + '</span>';
           wordListEl.appendChild(li);
         }
         updateUI(true);
       }
 
       function foundHas(wordUp){ return foundMap[wordUp] === 1; }
-      function foundAdd(wordUp){ if(foundHas(wordUp)) return false; foundMap[wordUp]=1; foundN+=1; return true; }
-      function foundReset(){ foundMap = {}; foundN = 0; }
+
+      function foundAdd(wordUp){
+        if(foundHas(wordUp)) return false;
+        foundMap[wordUp] = 1;
+        foundN += 1;
+        return true;
+      }
+
+      function foundReset(){
+        foundMap = {};
+        foundN = 0;
+      }
 
       function setPouring(on){
         if(!glassWrapEl) return;
@@ -1448,12 +1118,14 @@
         if(s < 0) s = 0;
         if(s > 1) s = 1;
 
+        // translate from empty (below) to a classic tea fill (~60–65% height when full)
         var yEmpty = 200;
         var yFull = 70;
         var y = Math.round(yEmpty + (yFull - yEmpty) * s);
         teaLiquidEl.style.transform = "translateY(" + y + "px)";
 
         if(!silent && pct > lastTeaPct){
+          // pouring FX
           setPouring(true);
           playPourSound(pct - lastTeaPct);
           (function(){
@@ -1474,6 +1146,7 @@
 
         bubblesEl.style.opacity = foundN ? "1" : "0";
 
+        // update word list
         var children = wordListEl.children;
         var i;
         for(i=0; i<children.length; i++){
@@ -1533,7 +1206,9 @@
         return s;
       }
 
-      function reverseStr(u){ return u.split("").reverse().join(""); }
+      function reverseStr(u){
+        return u.split("").reverse().join("");
+      }
 
       function isKnownWord(s){
         var u = s;
@@ -1556,6 +1231,7 @@
           var out = [];
           var len = wup.length;
 
+          // horizontal (scan left->right)
           var r, c, j;
           for(r=0; r<SIZE; r++){
             for(c=0; c<=SIZE-len; c++){
@@ -1570,6 +1246,7 @@
             }
           }
 
+          // vertical (scan top->bottom)
           for(c=0; c<SIZE; c++){
             for(r=0; r<=SIZE-len; r++){
               s = "";
@@ -1609,6 +1286,7 @@
           for(k=0; k<arr.length; k++){
             var seq = arr[k];
             if(pathIsPrefixOf(path, seq)) return true;
+            // allow starting from the other end
             var revSeq = seq.slice().reverse();
             if(pathIsPrefixOf(path, revSeq)) return true;
           }
@@ -1690,6 +1368,7 @@
         hideWin();
         clearSelection();
 
+        // remove found styles
         var cells = document.querySelectorAll(".cell");
         var i;
         for(i=0; i<cells.length; i++){
@@ -1707,7 +1386,6 @@
         lastTeaPct = 0;
         updateUI(true);
         popBubbles();
-        resetTimer();
       }
 
       function newGame(){
@@ -1719,27 +1397,12 @@
         renderBoard();
         renderWords();
         popBubbles();
-        updateUI(true);
-        setTimeout(adjustCellSize, 0);
-      }
-
-      function recordWinToLeaderboard(){
-        var ms = Date.now() - gameStartMs;
-        var entry = {
-          nickname: nickname || '?',
-          ms: ms,
-          words: WORDS.length,
-          difficulty: difficulty,
-          mode: mode,
-          score: (mode === 'race') ? scoreFromTime(ms, WORDS.length) : null,
-          ts: Date.now()
-        };
-        addScoreToLeaderboard(entry);
       }
 
       function markFound(wordUp){
         if(!foundAdd(wordUp)) return;
 
+        // color
         var idx = 0;
         var i;
         for(i=0; i<WORDS.length; i++){
@@ -1747,6 +1410,7 @@
         }
         var color = COLORS[idx % COLORS.length];
 
+        // Lock in the cells for this path (in either direction)
         var candidate = pathString();
         var chosen = path;
         if(candidate !== wordUp){
@@ -1769,6 +1433,7 @@
             "0 14px 24px " + hexToRgba(color,.20);
         }
 
+        // Highlight the word item
         var children = wordListEl.children;
         for(i=0; i<children.length; i++){
           var li = children[i];
@@ -1784,11 +1449,7 @@
         playSuccessSound();
         popBubbles();
 
-        if(foundN === WORDS.length){
-          stopTimer();
-          recordWinToLeaderboard();
-          showWin();
-        }
+        if(foundN === WORDS.length) showWin();
       }
 
       function addToPath(cell){
@@ -1797,6 +1458,7 @@
         var last = path.length ? path[path.length - 1] : null;
         if(last && last.r === cell.r && last.c === cell.c) return;
 
+        // no repeats
         var i;
         for(i=0; i<path.length; i++){
           if(path[i].r === cell.r && path[i].c === cell.c) return;
@@ -1813,6 +1475,7 @@
         var dr = cell.r - prev.r;
         var dc = cell.c - prev.c;
 
+        // no diagonals: only 4-neighborhood
         if((Math.abs(dr) + Math.abs(dc)) !== 1) return;
 
         var step = normStep(dr, dc);
@@ -1827,6 +1490,7 @@
 
         if(!sameDir(dir, step)) return;
 
+        // enforce straight-line continuation
         var expected = { r: prev.r + dir.dr, c: prev.c + dir.dc };
         if(cell.r !== expected.r || cell.c !== expected.c) return;
 
@@ -1849,8 +1513,11 @@
       function armAudio(){
         if(audioArmed) return;
         audioArmed = true;
-        try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-        catch(err){ audioCtx = null; }
+        try{
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(err){
+          audioCtx = null;
+        }
       }
 
       function resumeAudio(){
@@ -1871,6 +1538,7 @@
         master.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.06);
         master.connect(audioCtx.destination);
 
+        // short "pop": sine + tiny noise click
         var o = audioCtx.createOscillator();
         o.type = "sine";
         o.frequency.setValueAtTime(420 + 240 * strength, t0);
@@ -1920,6 +1588,7 @@
         master.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
         master.connect(audioCtx.destination);
 
+        // Pink-ish noise made from filtered white noise
         var noiseBuf = audioCtx.createBuffer(1, Math.floor(audioCtx.sampleRate * dur), audioCtx.sampleRate);
         var data = noiseBuf.getChannelData(0);
         var i;
@@ -1954,6 +1623,7 @@
         src.start(t0);
         src.stop(t0 + dur);
 
+        // a couple of tiny "glug" blips
         var n;
         for(n=0; n<2; n++){
           var dt = 0.06 + n * (dur * 0.40);
@@ -2003,6 +1673,7 @@
           o.stop(t0 + 0.42);
         }
 
+        // noise spark
         var noiseBuf = audioCtx.createBuffer(1, Math.floor(audioCtx.sampleRate * 0.10), audioCtx.sampleRate);
         var data = noiseBuf.getChannelData(0);
         for(i=0; i<data.length; i++) data[i] = (Math.random()*2-1) * (1 - i/data.length);
@@ -2059,11 +1730,10 @@
         }
       }
 
+      // Pointer / touch handling
       function onPointerDown(e){
         var tgt = e.target;
         if(!tgt) return;
-        if(startOverlayEl && startOverlayEl.classList.contains('show')) return;
-        if(lbOverlayEl && lbOverlayEl.classList.contains('show')) return;
 
         var cellBtn = findCellFromElement(tgt);
         if(!cellBtn) return;
@@ -2101,44 +1771,26 @@
         clearSelection();
       }
 
-      btnNew.addEventListener("click", function(){ openStartOverlay(); });
-      btnLeaderboard.addEventListener("click", function(){ openLbOverlay(); });
+      btnNew.addEventListener("click", function(){ newGame(); });
       btnReset.addEventListener("click", function(){ resetProgress(); });
-      btnAgain.addEventListener("click", function(){ hideWin(); newGame(); resetTimer(); });
+      btnAgain.addEventListener("click", function(){ hideWin(); newGame(); });
       btnClose.addEventListener("click", function(){ hideWin(); });
-      overlayEl.addEventListener("click", function(e){ if(e && e.target === overlayEl) hideWin(); });
-
-      btnLbClose.addEventListener('click', function(){ closeOverlay(lbOverlayEl); });
-      lbOverlayEl.addEventListener('click', function(e){ if(e && e.target === lbOverlayEl) closeOverlay(lbOverlayEl); });
-
-      modeTeaBtn.addEventListener('click', function(){ mode = 'tea'; syncStartUI(); updateHeaderPills(); });
-      modeRaceBtn.addEventListener('click', function(){ mode = 'race'; syncStartUI(); updateHeaderPills(); });
-      diffA1Btn.addEventListener('click', function(){ difficulty = 'A1'; syncStartUI(); updateHeaderPills(); });
-      diffB1Btn.addEventListener('click', function(){ difficulty = 'B1'; syncStartUI(); updateHeaderPills(); });
-
-      btnStart.addEventListener('click', function(){ startGame(); });
-      btnStartCancel.addEventListener('click', function(){ closeOverlay(startOverlayEl); });
-      startOverlayEl.addEventListener('click', function(e){ if(e && e.target === startOverlayEl) closeOverlay(startOverlayEl); });
-
-      if(nickInputEl){
-        nickInputEl.addEventListener('keydown', function(e){ if(e && e.key === 'Enter') startGame(); });
-      }
+      overlayEl.addEventListener("click", function(e){
+        if(e && e.target === overlayEl) hideWin();
+      });
 
       gridEl.addEventListener("pointerdown", onPointerDown);
       gridEl.addEventListener("pointermove", onPointerMove);
       gridEl.addEventListener("pointerup", onPointerUp);
       gridEl.addEventListener("pointercancel", onPointerCancel);
       gridEl.addEventListener("lostpointercapture", onPointerCancel);
+
+      // Prevent accidental scroll on iOS when selecting
       gridEl.addEventListener("touchmove", function(e){ if(e && e.preventDefault) e.preventDefault(); }, {passive:false});
 
-      window.addEventListener('resize', function(){ setTimeout(adjustCellSize, 60); });
-
+      // init
       try{
-        loadCfg();
-        applyDifficultyAndSize();
-        updateHeaderPills();
-        syncStartUI();
-        openStartOverlay();
+        newGame();
       } catch(e){
         document.body.innerHTML = '<pre style="color:red;padding:20px">' + (e && e.message ? e.message : "Error") + '\n' + (e && e.stack ? e.stack : "") + '</pre>';
       }
