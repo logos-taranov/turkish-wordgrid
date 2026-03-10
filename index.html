@@ -53,20 +53,30 @@
       color:var(--ink);
       overflow-x:hidden;
 
-      /* Wooden table (no images: layered gradients) */
+      /* Wooden table (no images): layered gradients with grain + knots */
       background:
-        radial-gradient(1200px 700px at 15% 10%, rgba(255,255,255,.14), transparent 60%),
-        radial-gradient(1100px 700px at 85% 0%, rgba(255,210,120,.10), transparent 60%),
-        radial-gradient(900px 650px at 50% 110%, rgba(0,0,0,.22), transparent 70%),
-        repeating-linear-gradient( 90deg,
-          rgba(255,255,255,.06) 0px,
-          rgba(255,255,255,.06) 10px,
-          rgba(0,0,0,.05) 10px,
-          rgba(0,0,0,.05) 22px,
-          rgba(255,255,255,.04) 22px,
-          rgba(255,255,255,.04) 38px
+        radial-gradient(1200px 700px at 18% 8%, rgba(255,255,255,.18), transparent 62%),
+        radial-gradient(1100px 700px at 86% 0%, rgba(255,220,150,.10), transparent 62%),
+        radial-gradient(900px 650px at 50% 112%, rgba(0,0,0,.26), transparent 70%),
+        /* knots / darker swirls */
+        radial-gradient(140px 110px at 22% 44%, rgba(55,26,10,.26), transparent 72%),
+        radial-gradient(190px 140px at 74% 62%, rgba(55,26,10,.22), transparent 74%),
+        radial-gradient(120px 90px at 62% 30%, rgba(55,26,10,.16), transparent 72%),
+        /* long grain lines */
+        repeating-linear-gradient( 12deg,
+          rgba(255,255,255,.05) 0px,
+          rgba(255,255,255,.05) 7px,
+          rgba(0,0,0,.05) 7px,
+          rgba(0,0,0,.05) 14px
         ),
-        linear-gradient(180deg, #b86a33, #8b461d);
+        repeating-linear-gradient( 90deg,
+          rgba(255,255,255,.028) 0px,
+          rgba(255,255,255,.028) 18px,
+          rgba(0,0,0,.040) 18px,
+          rgba(0,0,0,.040) 30px
+        ),
+        linear-gradient(180deg, #b46a34 0%, #87411b 58%, #6a3216 100%);
+      background-attachment: fixed;
     }
 
     body::before{
@@ -108,12 +118,47 @@
       gap:6px;
     }
 
+    .brand{
+      margin:0;
+      font-weight: 1000;
+      font-size: 46px;
+      line-height: .92;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 0%, #eafff6 20%, #ffefc9 55%, #ffcc3b 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow:
+        0 10px 24px rgba(0,0,0,.22),
+        0 2px 0 rgba(255,255,255,.14);
+      position: relative;
+      display: inline-block;
+    }
+
+    .brand::after{
+      content:"";
+      position:absolute;
+      left:-12px;
+      right:-12px;
+      bottom:-10px;
+      height:18px;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(18,199,162,.55), transparent 60%),
+        radial-gradient(circle at 55% 20%, rgba(18,199,162,.35), transparent 62%),
+        radial-gradient(circle at 80% 60%, rgba(18,199,162,.45), transparent 62%);
+      filter: blur(7px);
+      opacity:.62;
+      z-index:-1;
+    }
+
     .title h1{
       margin:0;
-      font-size:20px;
-      letter-spacing:.2px;
-      line-height:1.15;
-      text-shadow: 0 2px 0 rgba(255,255,255,.25);
+      font-size:14px;
+      letter-spacing:.3px;
+      line-height:1.25;
+      color: rgba(255,255,255,.88);
+      text-shadow: 0 2px 0 rgba(0,0,0,.18);
     }
     .title .sub{
       font-size:13px;
@@ -151,14 +196,22 @@
     .board{
       padding: var(--boardPad);
       background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.22), transparent 55%),
-        repeating-linear-gradient( 90deg,
-          rgba(255,255,255,.06) 0px,
-          rgba(255,255,255,.06) 14px,
-          rgba(0,0,0,.07) 14px,
-          rgba(0,0,0,.07) 28px
+        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.22), transparent 56%),
+        radial-gradient(260px 180px at 24% 58%, rgba(40,18,7,.12), transparent 70%),
+        radial-gradient(220px 160px at 78% 40%, rgba(40,18,7,.10), transparent 72%),
+        repeating-linear-gradient( 96deg,
+          rgba(255,255,255,.05) 0px,
+          rgba(255,255,255,.05) 16px,
+          rgba(0,0,0,.06) 16px,
+          rgba(0,0,0,.06) 34px
         ),
-        linear-gradient(180deg, #c98044, #8a4a1f);
+        repeating-linear-gradient( 10deg,
+          rgba(255,255,255,.03) 0px,
+          rgba(255,255,255,.03) 5px,
+          rgba(0,0,0,.02) 5px,
+          rgba(0,0,0,.02) 10px
+        ),
+        linear-gradient(180deg, #d09155 0%, #a15d2a 58%, #7c3d18 100%);
       border: 2px solid rgba(60,28,10,.55);
       box-shadow:
         0 22px 70px rgba(0,0,0,.26),
@@ -334,19 +387,41 @@
     }
 
     .glassWrap{
-      height: 190px;
-      width: 120px;
+      height: 200px;
+      width: 130px;
       margin: 0 auto;
       position:relative;
     }
 
     .glassSvg{
       display:block;
-      width: 120px;
-      height: 180px;
+      width: 130px;
+      height: 188px;
       filter:
         drop-shadow(0 18px 20px rgba(0,0,0,.22))
         drop-shadow(0 6px 8px rgba(0,0,0,.12));
+    }
+
+    /* Steam inside SVG */
+    .steam path{
+      fill:none;
+      stroke: rgba(255,255,255,.56);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: .65;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: steamFloat 3.2s ease-in-out infinite;
+    }
+
+    .steam path:nth-child(2){ animation-delay: .85s; opacity: .52; }
+    .steam path:nth-child(3){ animation-delay: 1.7s; opacity: .46; }
+
+    @keyframes steamFloat{
+      0%{ transform: translateY(8px); opacity:0; }
+      18%{ opacity:.68; }
+      100%{ transform: translateY(-10px); opacity:0; }
     }
 
     /* Tea fill: translate (not scale) so the surface stays natural */
@@ -356,7 +431,7 @@
       will-change: transform;
     }
 
-    .teaSurface{ transform-origin: 60px 60px; }
+    .teaSurface{ transform-origin: 60px 20px; }
 
     .glassWrap.pouring .teaSurface{
       animation: teaWave .17s ease-in-out infinite alternate;
@@ -407,12 +482,12 @@
     .saucer{
       position:absolute;
       left: 50%;
-      bottom: 0;
+      bottom: -2px;
       transform: translateX(-50%);
-      width: 130px;
-      height: 28px;
-      opacity: .98;
-      filter: drop-shadow(0 10px 10px rgba(0,0,0,.18));
+      width: 150px;
+      height: 40px;
+      opacity: .99;
+      filter: drop-shadow(0 12px 12px rgba(0,0,0,.20));
     }
 
     .words{
@@ -588,8 +663,8 @@
       .teaWrap{ flex-direction:row; }
       .teaCard{ flex:0 0 160px; }
       ul.wordList{ grid-template-columns: 1fr; }
-      .glassWrap{ height: 180px; width: 120px; }
-      .glassSvg{ height: 170px; }
+      .glassWrap{ height: 190px; width: 130px; }
+      .glassSvg{ height: 178px; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -601,7 +676,8 @@
   <div class="app">
     <header>
       <div class="title">
-        <h1>Doğa — сетка слов на турецком</h1>
+        <div class="brand" aria-label="DOĞA">DOĞA</div>
+        <h1>Сетка слов на турецком</h1>
         <div class="sub">
           <div class="pill">Спокойный режим — без таймера</div>
           <div class="pill">Выделяй слова свайпом по буквам</div>
@@ -626,58 +702,106 @@
             <div id="glassWrap" class="glassWrap" aria-hidden="true">
               <svg class="glassSvg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
+                  <!-- Ruby tea -->
                   <linearGradient id="teaGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#F26B3A" stop-opacity="0.90"/>
-                    <stop offset="60%" stop-color="#B42A16" stop-opacity="0.92"/>
-                    <stop offset="100%" stop-color="#66110F" stop-opacity="0.92"/>
+                    <stop offset="0%" stop-color="#E45B67" stop-opacity="0.92"/>
+                    <stop offset="55%" stop-color="#C93040" stop-opacity="0.94"/>
+                    <stop offset="100%" stop-color="#5A0E18" stop-opacity="0.95"/>
                   </linearGradient>
 
                   <linearGradient id="glassShine" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stop-color="rgba(255,255,255,.04)"/>
-                    <stop offset="35%" stop-color="rgba(255,255,255,.52)"/>
-                    <stop offset="75%" stop-color="rgba(255,255,255,.10)"/>
+                    <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+                    <stop offset="30%" stop-color="rgba(255,255,255,.55)"/>
+                    <stop offset="60%" stop-color="rgba(255,255,255,.10)"/>
                     <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
                   </linearGradient>
 
+                  <linearGradient id="spoonGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(255,255,255,.85)"/>
+                    <stop offset="55%" stop-color="rgba(210,220,230,.75)"/>
+                    <stop offset="100%" stop-color="rgba(120,130,140,.65)"/>
+                  </linearGradient>
+
+                  <filter id="steamBlur" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="0.6"/>
+                  </filter>
+
                   <clipPath id="glassClip">
-                    <!-- Turkish tea glass (armudu) -->
-                    <path d="M24 16 C18 36 20 54 30 76 C40 92 40 110 33 126 C24 150 18 166 16 178 C18 194 36 198 60 198 C84 198 102 194 104 178 C102 166 96 150 87 126 C80 110 80 92 90 76 C100 54 102 36 96 16 Z"/>
+                    <!-- Classic armudu silhouette: base → belly → waist pinch → flaring rim -->
+                    <path d="M28 22 C24 40 22 54 26 70 C30 86 40 92 44 104 C48 116 46 132 40 148 C34 166 34 178 38 186 C44 196 54 198 60 198 C66 198 76 196 82 186 C86 178 86 166 80 148 C74 132 72 116 76 104 C80 92 90 86 94 70 C98 54 96 40 92 22 C82 16 72 14 60 14 C48 14 38 16 28 22 Z"/>
                   </clipPath>
                 </defs>
 
-                <!-- Tea fill (clipped by glass). We translate the liquid, not scale it. -->
+                <!-- Faint steam -->
+                <g class="steam" filter="url(#steamBlur)" opacity=".58" aria-hidden="true">
+                  <path d="M44 28 C36 22 38 14 46 10 C54 6 54 2 48 0"/>
+                  <path d="M60 26 C52 18 54 12 62 8 C70 4 70 0 64 0"/>
+                  <path d="M76 28 C68 22 70 14 78 10 C86 6 86 2 80 0"/>
+                </g>
+
+                <!-- Tea fill (clipped). We translate the liquid, not scale it. -->
                 <g id="teaGroup" clip-path="url(#glassClip)">
                   <g id="teaLiquid" class="teaLiquid">
                     <rect x="0" y="0" width="120" height="200" fill="url(#teaGrad)"/>
                     <!-- surface highlight (moves with the liquid) -->
-                    <path class="teaSurface" d="M0 58 C18 52 38 50 60 50 C82 50 102 52 120 58 L120 80 C102 74 82 72 60 72 C38 72 18 74 0 80 Z" fill="rgba(255,255,255,.16)"/>
-                    <path class="teaSurface" d="M6 62 C22 58 40 56 60 56 C80 56 98 58 114 62" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+                    <path class="teaSurface" d="M0 18 C18 12 38 10 60 10 C82 10 102 12 120 18 L120 40 C102 34 82 32 60 32 C38 32 18 34 0 40 Z" fill="rgba(255,255,255,.14)"/>
+                    <path class="teaSurface" d="M8 22 C24 18 42 16 60 16 C78 16 96 18 112 22" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2" stroke-linecap="round" opacity=".82"/>
                   </g>
                 </g>
 
-                <!-- Glass body (a bit more volumetric) -->
-                <path d="M24 16 C18 36 20 54 30 76 C40 92 40 110 33 126 C24 150 18 166 16 178 C18 194 36 198 60 198 C84 198 102 194 104 178 C102 166 96 150 87 126 C80 110 80 92 90 76 C100 54 102 36 96 16 Z"
-                      fill="rgba(255,255,255,.16)" stroke="rgba(20,10,6,.38)" stroke-width="3"/>
+                <!-- Spoon leaning inside (clipped) -->
+                <g clip-path="url(#glassClip)" opacity=".92" aria-hidden="true">
+                  <path d="M76 42 C70 86 64 122 58 168" fill="none" stroke="url(#spoonGrad)" stroke-width="3.2" stroke-linecap="round"/>
+                  <ellipse cx="56" cy="170" rx="10" ry="6" fill="rgba(235,240,245,.60)" stroke="rgba(255,255,255,.65)" stroke-width="1"/>
+                </g>
+
+                <!-- Glass body -->
+                <path d="M28 22 C24 40 22 54 26 70 C30 86 40 92 44 104 C48 116 46 132 40 148 C34 166 34 178 38 186 C44 196 54 198 60 198 C66 198 76 196 82 186 C86 178 86 166 80 148 C74 132 72 116 76 104 C80 92 90 86 94 70 C98 54 96 40 92 22 C82 16 72 14 60 14 C48 14 38 16 28 22 Z"
+                      fill="rgba(255,255,255,.14)" stroke="rgba(20,10,6,.42)" stroke-width="3"/>
 
                 <!-- Rim line -->
-                <path d="M28 20 C40 16 52 15 60 15 C68 15 80 16 92 20" fill="none" stroke="rgba(20,10,6,.38)" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M30 22 C42 16 52 15 60 15 C68 15 78 16 90 22" fill="none" stroke="rgba(20,10,6,.42)" stroke-width="2.4" stroke-linecap="round"/>
 
-                <!-- Shine -->
-                <path d="M38 24 C33 54 33 70 39 88 C45 106 42 126 36 144 C30 162 30 174 34 186"
-                      fill="none" stroke="url(#glassShine)" stroke-width="6" stroke-linecap="round" opacity=".95"/>
+                <!-- Reflections (2–3 highlight lines on the left edge) -->
+                <path d="M40 30 C34 62 36 80 44 98 C52 116 50 134 42 154 C36 172 38 184 44 190" fill="none" stroke="url(#glassShine)" stroke-width="6" stroke-linecap="round" opacity=".95"/>
+                <path d="M46 38 C42 62 44 80 50 96" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="2.6" stroke-linecap="round" opacity=".85"/>
+                <path d="M44 118 C50 132 48 148 44 160" fill="none" stroke="rgba(255,255,255,.26)" stroke-width="2.3" stroke-linecap="round" opacity=".80"/>
               </svg>
 
               <div id="bubbles" class="bubbles" aria-hidden="true"></div>
 
-              <svg class="saucer" viewBox="0 0 140 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- Decorated saucer (white + red/gold accents, scalloped edge) -->
+              <svg class="saucer" viewBox="0 0 160 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
-                  <linearGradient id="sauc" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#F6E0B8"/>
-                    <stop offset="100%" stop-color="#C98B44"/>
+                  <linearGradient id="plateShadow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(255,255,255,.98)"/>
+                    <stop offset="100%" stop-color="rgba(235,235,235,.92)"/>
                   </linearGradient>
                 </defs>
-                <ellipse cx="70" cy="18" rx="60" ry="10" fill="url(#sauc)" stroke="rgba(70,30,10,.40)" stroke-width="1.6"/>
-                <ellipse cx="70" cy="18" rx="34" ry="5.5" fill="rgba(255,255,255,.14)"/>
+
+                <ellipse cx="80" cy="27" rx="64" ry="13" fill="rgba(0,0,0,.18)" opacity=".35"/>
+                <ellipse cx="80" cy="24" rx="64" ry="13" fill="url(#plateShadow)" stroke="rgba(70,30,10,.30)" stroke-width="1.4"/>
+
+                <!-- scallops: dotted thick stroke with round caps -->
+                <ellipse cx="80" cy="24" rx="64" ry="13" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="8" stroke-dasharray="1 10" stroke-linecap="round" opacity=".92"/>
+
+                <!-- inner dish -->
+                <ellipse cx="80" cy="24" rx="52" ry="9.6" fill="rgba(255,255,255,.96)"/>
+                <ellipse cx="80" cy="24" rx="44" ry="7.2" fill="rgba(255,255,255,.80)"/>
+
+                <!-- accents -->
+                <ellipse cx="80" cy="24" rx="49" ry="9.0" fill="none" stroke="#C93040" stroke-width="2.2" opacity=".95"/>
+                <ellipse cx="80" cy="24" rx="46" ry="8.2" fill="none" stroke="#ffcc3b" stroke-width="1.6" opacity=".92"/>
+
+                <!-- small gold dots -->
+                <g opacity=".85" fill="#ffcc3b">
+                  <circle cx="42" cy="24" r="1.4"/>
+                  <circle cx="52" cy="18" r="1.1"/>
+                  <circle cx="62" cy="28" r="1.1"/>
+                  <circle cx="98" cy="19" r="1.1"/>
+                  <circle cx="108" cy="28" r="1.1"/>
+                  <circle cx="118" cy="24" r="1.4"/>
+                </g>
               </svg>
             </div>
           </div>
@@ -703,7 +827,7 @@
     <div class="win" role="dialog" aria-modal="true" aria-label="Победа">
       <div id="confetti" class="confetti" aria-hidden="true"></div>
       <h2>Tebrikler!</h2>
-      <p>Все слова найдены. Чай полный — можно отдыхать.</p>
+      <p>Браво! Все слова найдены, можно пить чай и отдыхать! 🍵</p>
       <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
         <button id="btnAgain" class="btn" type="button">Сыграть ещё</button>
         <button id="btnClose" class="btn secondary" type="button">Закрыть</button>
@@ -716,8 +840,9 @@
       var SIZE = 10;
       var TURKISH_ALPHA = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
 
-      // Nature theme — 21 words
-      var WORDS = [
+      // Nature theme — combined pool. Each new game picks up to 20 words.
+      var ALL_WORDS = [
+        // Original
         { tr: "orman",   ru: "лес" },
         { tr: "kır",     ru: "поле/луг" },
         { tr: "ot",      ru: "трава" },
@@ -738,8 +863,34 @@
         { tr: "göl",     ru: "озеро" },
         { tr: "çayır",   ru: "луг" },
         { tr: "ada",     ru: "остров" },
-        { tr: "plaj",    ru: "пляж" }
+        { tr: "plaj",    ru: "пляж" },
+
+        // New
+        { tr: "toprak",   ru: "почва" },
+        { tr: "nehir",    ru: "река" },
+        { tr: "dere",     ru: "ручей" },
+        { tr: "kum",      ru: "песок" },
+        { tr: "balık",    ru: "рыба" },
+        { tr: "yıldız",   ru: "звезда" },
+        { tr: "rüzgar",   ru: "ветер" },
+        { tr: "hava",     ru: "воздух" },
+        { tr: "bulut",    ru: "облако" },
+        { tr: "yıldırım", ru: "молния" },
+        { tr: "gökyüzü",  ru: "небо" },
+        { tr: "tepe",     ru: "холм" },
+        { tr: "kaya",     ru: "скала" },
+        { tr: "taş",      ru: "камень" },
+        { tr: "dal",      ru: "ветка" },
+        { tr: "sahil",    ru: "берег" },
+        { tr: "yağmur",   ru: "дождь" },
+        { tr: "kar",      ru: "снег" },
+        { tr: "fırtına",  ru: "шторм" },
+        { tr: "sis",      ru: "туман" },
+        { tr: "ışık",     ru: "свет" }
       ];
+
+      // Active words for the current board
+      var WORDS = [];
 
       var COLORS = [
         "#ff3b3b", // nar
@@ -831,7 +982,27 @@
 
       function fits(r, c){ return r >= 0 && r < SIZE && c >= 0 && c < SIZE; }
 
-      function generateBoard(){
+      function shuffleInPlace(arr){
+        var i;
+        for(i=arr.length-1; i>0; i--){
+          var j = randInt(i+1);
+          var t = arr[i];
+          arr[i] = arr[j];
+          arr[j] = t;
+        }
+        return arr;
+      }
+
+      function generateRandomBoard(){
+        var fb = makeEmptyBoard();
+        var r, c;
+        for(r=0; r<SIZE; r++){
+          for(c=0; c<SIZE; c++) fb[r][c] = TURKISH_ALPHA.charAt(randInt(TURKISH_ALPHA.length));
+        }
+        return fb;
+      }
+
+      function generateBoard(words){
         // No diagonals
         var directions = [
           {dr: 1, dc: 0}, {dr: -1, dc: 0},
@@ -840,16 +1011,20 @@
 
         var wordsUpper = [];
         var i;
-        for(i=0; i<WORDS.length; i++){
-          var w = WORDS[i];
+        for(i=0; i<words.length; i++){
+          var w = words[i];
           wordsUpper.push({ tr: w.tr, ru: w.ru, up: upTR(w.tr) });
         }
 
         // place longer first
         wordsUpper.sort(function(a,b){ return b.up.length - a.up.length; });
 
+        // More words => more retries (still fast enough for 10x10)
+        var maxAttempts = 260 + wordsUpper.length * 28;
+        var triesPerWord = 2200;
+
         var attempt;
-        for(attempt=0; attempt<320; attempt++){
+        for(attempt=0; attempt<maxAttempts; attempt++){
           var b = makeEmptyBoard();
           var okAll = true;
 
@@ -859,7 +1034,7 @@
             var placed = false;
             var t;
 
-            for(t=0; t<1400; t++){
+            for(t=0; t<triesPerWord; t++){
               var d = pick(directions);
               var len = ww.up.length;
 
@@ -908,16 +1083,34 @@
           return b;
         }
 
-        // fallback (should not happen)
-        var fb = makeEmptyBoard();
-        var r2, c2;
-        for(r2=0; r2<SIZE; r2++){
-          for(c2=0; c2<SIZE; c2++) fb[r2][c2] = TURKISH_ALPHA.charAt(randInt(TURKISH_ALPHA.length));
+        return null;
+      }
+
+      function pickWordsAndBoard(){
+        var pool = ALL_WORDS.slice();
+        shuffleInPlace(pool);
+
+        var maxN = 20;
+        if(maxN > pool.length) maxN = pool.length;
+
+        var n;
+        for(n=maxN; n>=10; n--){
+          var candidate = pool.slice(0, n);
+          var b = generateBoard(candidate);
+          if(b){
+            WORDS = candidate;
+            return b;
+          }
         }
-        return fb;
+
+        // Last resort
+        WORDS = pool.slice(0, 10);
+        var bb = generateBoard(WORDS);
+        return bb ? bb : generateRandomBoard();
       }
 
       function renderBoard(){
+
         gridEl.innerHTML = "";
         gridEl.style.gridTemplateColumns = "repeat(" + SIZE + ", var(--cellSize))";
 
@@ -980,8 +1173,10 @@
         if(s < 0) s = 0;
         if(s > 1) s = 1;
 
-        // translate from bottom (200px) to top (0px)
-        var y = Math.round((1 - s) * 200);
+        // translate from empty (below) to a classic tea fill (~60–65% height when full)
+        var yEmpty = 200;
+        var yFull = 70;
+        var y = Math.round(yEmpty + (yFull - yEmpty) * s);
         teaLiquidEl.style.transform = "translateY(" + y + "px)";
 
         if(!silent && pct > lastTeaPct){
@@ -1252,7 +1447,7 @@
         foundReset();
         hideWin();
         clearSelection();
-        board = generateBoard();
+        board = pickWordsAndBoard();
         wordOcc = buildWordOccurrences(board);
         renderBoard();
         renderWords();
