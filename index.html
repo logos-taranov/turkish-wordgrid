@@ -54,7 +54,21 @@
       overflow-x:hidden;
 
       /* Wooden table (no images): layered gradients with grain + knots */
-      background: url('wood-bg.jpg') center/cover no-repeat fixed;
+      /* Wooden table (no images: layered gradients) */
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(255,255,255,.14), transparent 60%),
+        radial-gradient(1100px 700px at 85% 0%, rgba(255,210,120,.10), transparent 60%),
+        radial-gradient(900px 650px at 50% 110%, rgba(0,0,0,.22), transparent 70%),
+        repeating-linear-gradient( 90deg,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 10px,
+          rgba(0,0,0,.05) 10px,
+          rgba(0,0,0,.05) 22px,
+          rgba(255,255,255,.04) 22px,
+          rgba(255,255,255,.04) 38px
+        ),
+        linear-gradient(180deg, #b86a33, #8b461d);
+    
       background-attachment: fixed;
     }
 
