@@ -848,7 +848,7 @@
           <div class="fieldLabel">Режим</div>
           <div class="segRow" role="group" aria-label="Выбор режима">
             <button id="modeTea" class="optBtn" type="button">Çay Keyfi</button>
-            <button id="modeRace" class="optBtn" type="button">Yarış</button>
+            <button id="modeRace" class="optBtn" type="button">Hızlı Mod</button>
           </div>
         </div>
 
@@ -1123,7 +1123,7 @@
 
       function updateHeaderPills(){
         var d = (difficulty === 'B1') ? 'B1' : 'A1';
-        var m = (mode === 'race') ? 'Yarış' : 'Çay Keyfi';
+        var m = (mode === 'race') ? 'Hızlı Mod' : 'Çay Keyfi';
         if(pillModeEl) pillModeEl.textContent = m + ' • ' + d;
         if(pillNickEl) pillNickEl.textContent = nickname ? ('Ник: ' + nickname) : 'Ник: —';
         if(pillTimerEl) pillTimerEl.style.display = (mode === 'race') ? '' : 'none';
@@ -1194,7 +1194,7 @@
           var it = arr[i];
           var li = document.createElement('li');
           var t = fmtTime(it.ms);
-          var meta = (it.mode === 'race' ? 'Yarış' : 'Çay') + ' • ' + (it.difficulty || '?') + ' • ' + (it.words || 0) + ' kelime';
+          var meta = (it.mode === 'race' ? 'Hızlı Mod' : 'Çay Keyfi') + ' • ' + (it.difficulty || '?') + ' • ' + (it.words || 0) + ' kelime';
           if(it.mode === 'race' && typeof it.score === 'number') meta += ' • skor ' + it.score;
           li.innerHTML = '<strong>' + escapeHtml(it.nickname) + '</strong> — ' + t + '<div class="lbMeta">' + escapeHtml(meta) + '</div>';
           lbListEl.appendChild(li);
