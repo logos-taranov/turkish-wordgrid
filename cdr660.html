@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>CDR-660 Test Results</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 20px; background: #f5f5f5; }
+h1 { color: #333; }
+.summary { margin: 10px 0 20px; font-size: 14px; color: #666; }
+table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+th { background: #2c3e50; color: white; padding: 10px 8px; text-align: left; font-size: 13px; position: sticky; top: 0; }
+td { padding: 8px; border: 1px solid #ddd; font-size: 12px; vertical-align: top; white-space: pre-wrap; max-width: 400px; overflow: hidden; }
+tr:nth-child(even) { background: #fafafa; }
+tr.failed { background: #fff9c4 !important; }
+tr.failed td:last-child { font-weight: bold; color: #d32f2f; }
+tr.passed td:last-child { color: #388e3c; }
+tr.header-row { background: #ecf0f1; font-weight: bold; }
+.tag { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 11px; }
+.tag-failed { background: #ffeb3b; color: #333; }
+.tag-passed { background: #c8e6c9; color: #1b5e20; }
+.stats { display: flex; gap: 20px; margin: 15px 0; }
+.stat-box { padding: 15px 20px; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.stat-num { font-size: 24px; font-weight: bold; }
+.stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+</style>
+</head>
+<body>
+<h1>CDR-660 — Smart CPA Test Results</h1>
+<p class="summary">Автоматически собрано из комментариев Jira CDR-660 (Tatyana Khaneeva)</p>
+<div class="stats">
+<div class="stat-box"><div class="stat-num">202</div><div class="stat-label">Total tests</div></div>
+<div class="stat-box"><div class="stat-num" style="color:#388e3c">107</div><div class="stat-label">Passed</div></div>
+<div class="stat-box"><div class="stat-num" style="color:#d32f2f">99</div><div class="stat-label">Failed</div></div>
+</div>
+<table>
+<thead><tr><th>Date</th><th>Проверка</th><th>ОР (Expected)</th><th>ФР (Actual)</th><th>Status</th></tr></thead>
+<tbody>
+<tr class="passed"><td>2025-12-23</td><td>{
+  "bundleId": 3025254,
+  "bid": 0.9,
+  "testBudget": 10,
+  "minPayout": 0.5,
+  "maxPayout": 1,
+  "placements": "placement_1",
+  "typePlacements": true,
+  "disablePostback": false,
+  "enableBoost": true,
+  "boostBudget": 50,
+  "boostPayout": 0.75,
+  "minRoi": 0.5,
+  "campaignName": "Test Campaign",...</td><td>201 Created  , в теле ответа информация о созданной кампании в БД id.smartcpa_campaigns находится созданная кампания, все данные совпадают согласно запросу.на фронте на странице Bundle report можно увидеть созданную кампанию в redis https://redis-pp-commander-eur.at-systems.biz/ появляется папка соз...</td><td>201 Created  [
+  {
+    "bundleId": 3025254,
+    "bid": 0.9,
+    "testBudget": 10,
+    "minPayout": 0.5,
+    "maxPayout": 1,
+    "placements": "placement_1",
+    "typePlacements": true,
+    "disablePostback": false,
+    "enableBoost": true,
+    "boostBudget": 50,
+    "boostPayout": 0.75,
+    "minRoi"...</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>{
+  "bundleId": 3025256,
+  "bid": 0.9,
+  "testBudget": 10,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": true,
+  "disablePostback": true,
+  "enableBoost": true,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "campaignName": null,
+  "quantity":...</td><td>201 Created , в теле ответа информация о созданной кампании в БД id.smartcpa_campaigns находится созданная кампания, все данные совпадают согласно запросу.на фронте на странице Bundle report можно увидеть созданную кампанию</td><td>201 Created[
+  {
+    "bundleId": 3025256,
+    "bid": 0.9,
+    "testBudget": 10,
+    "minPayout": null,
+    "maxPayout": null,
+    "placements": "",
+    "typePlacements": true,
+    "disablePostback": true,
+    "enableBoost": true,
+    "boostBudget": null,
+    "boostPayout": null,
+    "minRoi": null,
+...</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"bid": "1.65747"</td><td>201 Created</td><td>201 Created</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"enableBoost": null</td><td>201 Created</td><td>201 Created</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>ввод несуществующего bundle_id  "bundleId": -3025254</td><td>404 Not Found</td><td>404 Not Found {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id -3025254 not found",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>ввод null в параметр bunale_id "bundleId": null</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId should not be empty; bundleId must be a number conforming to the specified constraints",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"bid": -1</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bid must be >= 0",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"bid": null</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bid must be >= 0; bid should not be empty; bid must be a number conforming to the specified constraints",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"testBudget": null</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "test_budget must be >= 0; testBudget should not be empty; testBudget must be a number conforming to the specified constraints",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": ...</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"minPayout": -1</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "minPayout must be >= 0 or null or undefined",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"minPayout": "test"</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "minPayout must be >= 0 or null or undefined; minPayout must be a number or null",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"maxPayout": -1</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "maxPayout must be >= 0 or null or undefined",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"maxPayout": "test"</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "maxPayout must be >= 0 or null or undefined; maxPayout must be a number or null",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-23</td><td>"placements": 1"placements": true</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-23</td><td>"typePlacements": "test"</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-23</td><td>"disablePostback": null</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "disablePostback should not be empty; disablePostback must be a boolean value",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed но текст ошибки повторяется 2 раза</td></tr>
+<tr class="failed"><td>2025-12-23</td><td>"enableBoost": 1</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>"boostBudget": -1</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "boostBudget must be >= 0 or null or undefined",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>"boostBudget": "test"</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "boostBudget must be >= 0 or null or undefined; boostBudget must be number",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>"boostPayout": -1</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "boostPayout must be >= 0 or null or undefined",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>"boostPayout": "test"</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "boostPayout must be >= 0 or null or undefined; boostPayout must be a number or null",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>"minRoi": "test"</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "minRoi must be a number or null",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>"campaignName": true</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>"quantity": -1</td><td>400 Bad Request</td><td>201 Created с пустым массивом в теле ответа</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>"quantity": "test"</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "quantity must be a number conforming to the specified constraints",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>"quantity": null,
+"campaignIds": null</td><td>400 Bad Request</td><td>500 Internal Server Error {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "campaignIds is not iterable",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>"quantity": null,
+"campaignIds": []</td><td>400 Bad Request</td><td>201 Created с пустым массивом в теле ответа</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>"campaignIds": ["campaign ,.:%№&&*"]</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>"campaignIds": -1</td><td>400 Bad Request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "campaignIds is not iterable",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>"bundleId": 3025256 - не Manual "campaignIds": ["campaign_145345"]</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>"quantity": 1,
+"campaignIds": ["campaign_1"]</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "quantity and campaignIds cannot be used together; quantity and campaignIds cannot be used together",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>bundleId  3025254limit 10offset 0order [["id", "DESC"]]</td><td>200 OK в теле ответа информация о запрашиваемых кампаниях</td><td>500 Internal Server Error {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "invalid input syntax for type integer: \"NaN\"",
+  "data": {
+    "path": "/smart-cpa?limit=10&offset=0&order=%5B%5B%22id%22%2C%20%22DESC%22%5D%5D",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>bundleId  3025254limit пусто offset пустоorder пусто</td><td>200 OK</td><td>500 Internal Server Error {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "invalid input syntax for type integer: \"NaN\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>bundleId  пусто limit пусто offset пустоorder пусто</td><td>запрос отправить нельзя</td><td></td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>bundleId  3025254limit test offset testorder пусто</td><td>запрос отправить нельзя</td><td></td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>bundleId  -3025254limit пусто offset пустоorder пусто</td><td>400 Bad request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "invalid input syntax for type integer: \"NaN\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>запуск кампаний по ID {
+  "ids": [
+    2038,
+    2039,
+    2040,
+    2031
+  ],
+  "bundleId": null
+}</td><td>200 OKстатус в БД меняется на 2  у тех кампаний, которые уже были созданы на фронте отображается запущенная кампания</td><td>200 OK</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>запуск кампаний по площадке{
+  "ids": null,
+  "bundleId": 3025254
+}</td><td>200 OKстатус в БД меняется на 2  у тех кампаний, которые уже были созданы на фронте отображается запущенная кампания</td><td>200 OK</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>{
+  "ids": null,
+  "bundleId": null
+}</td><td>400 Bad request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>запуск кампаний по ID, когда связка на паузе</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "Can't resume smart CPA campaigns for bundle in status PAUSED",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>запуск кампаний по связке, когда связка на паузе</td><td>400 Bad Request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": 2038,
+  "bundleId": null
+}</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids must be an array of numbers",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad Request</td><td>404 Not Found - в тексте ошибки сказано, что id не найдены, хотя они и не указаны {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>несуществующие id {
+  "ids": [1325, 8575],
+  "bundleId": null
+}</td><td>404 Not Found</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": [2038, 2042],
+  "bundleId": 3025254
+}</td><td>400 Bad Request</td><td>400 Bad Request - но текст ошибки повторяется 2 раза {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids and bundleId cannot be used together; ids and bundleId cannot be used together",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error...</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": null,
+  "bundleId": -3025254
+}</td><td>404 Not Found</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id -3025254 not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": null,
+  "bundleId": "test"
+}</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId must be a number",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>пауза кампаний по ID{
+  "ids": [
+    2038,
+    2039,
+    2040,
+    2031
+  ],
+  "bundleId": null
+}</td><td>200 OKстатус в БД меняется на 3  у тех кампаний, которые уже были созданына фронте отображается запущенная кампания</td><td>200 OK</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>пауза кампаний по площадке{
+  "ids": null,
+  "bundleId": 3025254
+}</td><td>200 OKстатус в БД меняется на 3  у тех кампаний, которые уже были созданына фронте отображается запущенная кампания</td><td>200 OK</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>{
+  "ids": null,
+  "bundleId": null
+}</td><td>400 Bad request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>пауза кампаний по ID, когда связка на паузе{
+  "ids": [
+    2043,
+    2044,
+    2045
+  ],
+  "bundleId": null
+}</td><td>200 OK</td><td>200 OK</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>пауза кампаний по связке, когда связка на паузе{
+  "ids": null,
+  "bundleId": 3025254
+}</td><td>200 OK</td><td>200 OK</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": 2038,
+  "bundleId": null
+}</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids must be an array of numbers",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad Request</td><td>404 Not Found - в тексте ошибки сказано, что id не найдены, хотя они и не указаны{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>несуществующие id{
+  "ids": [1325, 8575],
+  "bundleId": null
+}</td><td>404 Not Found</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": [2038, 2042],
+  "bundleId": 3025254
+}</td><td>400 Bad Request</td><td>400 Bad Request - но текст ошибки повторяется 2 раза {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids and bundleId cannot be used together; ids and bundleId cannot be used together",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error...</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": null,
+  "bundleId": -3025254
+}</td><td>404 Not Found</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id -3025254 not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": null,
+  "bundleId": "test"
+}</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId must be a number",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>удаление кампаний по ID - связка НЕ Manual{
+  "ids": [
+    2049,
+    2036,
+    2037
+  ],
+  "bundleId": null
+}</td><td>200 OKстатус в БД меняется на 7  на фронте у кампании статус “Запрос на удаление”</td><td>200 OK</td><td>passed</td></tr>
+<tr class=""><td>2025-12-24</td><td>удаление кампаний по ID - связка  Manual{
+  "ids": [
+    2038,
+    2047,
+    2034
+  ],
+  "bundleId": null
+}</td><td>200 OKкампания удаляется из БД кампания удаляется с фронта</td><td>кампании со спецсимволами в названии удалены</td><td></td></tr>
+<tr class=""><td>2025-12-24</td><td>удаление кампаний по связке- связка НЕ Manual{
+  "ids": null,
+  "bundleId": 3025256
+}</td><td>200 OKстатус в БД меняется на 7  на фронте у кампании статус “Запрос на удаление”</td><td>200 OK</td><td></td></tr>
+<tr class="passed"><td>2025-12-24</td><td>удаление кампаний по связке - связка  Manual{
+  "ids": null,
+  "bundleId": 3025254
+}</td><td>200 OKкампания удаляется из БД кампания удаляется с фронта</td><td>200 OK</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>{
+  "ids": null,
+  "bundleId": null
+}</td><td>400 Bad request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": 2038,
+  "bundleId": null
+}</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids must be an array of numbers",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad Request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-24</td><td>несуществующие id{
+  "ids": [1325, 8575],
+  "bundleId": null
+}</td><td>404 Not Found</td><td>200 OK</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": [2038, 2042],
+  "bundleId": 3025254
+}</td><td>400 Bad Request</td><td>400 Bad Request - но текст ошибки повторяется 2 раза{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids and bundleId cannot be used together; ids and bundleId cannot be used together",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error"...</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": null,
+  "bundleId": -3025254
+}</td><td>404 Not Found</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id -3025254 not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2025-12-24</td><td>{
+  "ids": null,
+  "bundleId": "test"
+}</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId must be a number",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"placements": 1"placements": true</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"typePlacements": "test"</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="passed"><td>2025-12-26</td><td>"disablePostback": null</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "disablePostback should not be empty; disablePostback must be a boolean value",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed но текст ошибки повторяется 2 раза</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"enableBoost": 1</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"campaignName": true</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"quantity": -1</td><td>400 Bad Request</td><td>201 Created с пустым массивом в теле ответа</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"quantity": null,
+"campaignIds": null</td><td>400 Bad Request</td><td>500 Internal Server Error {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "campaignIds is not iterable",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"quantity": null,
+"campaignIds": []</td><td>400 Bad Request</td><td>201 Created с пустым массивом в теле ответа</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"campaignIds": ["campaign ,.:%№&&*"]</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"campaignIds": -1</td><td>400 Bad Request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "campaignIds is not iterable",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>"bundleId": 3025256 - не Manual "campaignIds": ["campaign_145345"]</td><td>400 Bad Request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>bundleId  3025254limit 10offset 0order [["id", "DESC"]]</td><td>200 OK в теле ответа информация о запрашиваемых кампаниях</td><td>500 Internal Server Error {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "invalid input syntax for type integer: \"NaN\"",
+  "data": {
+    "path": "/smart-cpa?limit=10&offset=0&order=%5B%5B%22id%22%2C%20%22DESC%22%5D%5D",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>bundleId  3025254limit пусто offset пустоorder пусто</td><td>200 OK</td><td>500 Internal Server Error {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "invalid input syntax for type integer: \"NaN\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>bundleId  -3025254limit пусто offset пустоorder пусто</td><td>400 Bad request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "invalid input syntax for type integer: \"NaN\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>{
+  "ids": null,
+  "bundleId": null
+}</td><td>400 Bad request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>запуск кампаний по связке, когда связка на паузе</td><td>400 Bad Request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad Request</td><td>404 Not Found - в тексте ошибки сказано, что id не найдены, хотя они и не указаны {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>{
+  "ids": null,
+  "bundleId": null
+}</td><td>400 Bad request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="failed"><td>2025-12-26</td><td>{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad Request</td><td>404 Not Found - в тексте ошибки сказано, что id не найдены, хотя они и не указаны{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>{
+  "bundleId": 3026848,
+  "bid": 0,
+  "testBudget": 0,
+  "minPayout": 0,
+  "maxPayout": 0,
+  "placements": "8565156",
+  "typePlacements": true,
+  "enablePostback": true,
+  "enableBoost": true,
+  "boostBudget": 0,
+  "boostPayout": 0,
+  "minRoi": 0,
+  "campaignName": "\"QA_Tanya (SmartCPA) - Test [v....</td><td>201 Created  [
+  {
+    "bundleId": 3026848,
+    "bid": 0,
+    "testBudget": 0,
+    "minPayout": 0,
+    "maxPayout": 0,
+    "placements": "8565156",
+    "typePlacements": true,
+    "enablePostback": true,
+    "enableBoost": true,
+    "boostBudget": 0,
+    "boostPayout": 0,
+    "minRoi": 0,
+    "campa...</td><td>201 Created</td><td>passed</td></tr>
+<tr class=""><td>2026-02-19</td><td>проверка ключа placements - значение число {
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": 1,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": nu...</td><td>201 Created (число меняется на строку)[
+  {
+    "bundleId": 3026848,
+    "bid": 0.1,
+    "testBudget": 0.1,
+    "minPayout": null,
+    "maxPayout": null,
+    "placements": "1",
+    "typePlacements": true,
+    "enablePostback": false,
+    "enableBoost": null,
+    "boostBudget": null,
+    "boostPayout...</td><td>201 Created</td><td></td></tr>
+<tr class=""><td>2026-02-19</td><td>проверка ключа typePlacements - значение строка “test” или "typePlacements": -1 - поведение одинаковое (подставляется дефолтное булево значение true)</td><td>201 Created (вместо строки  числа подставляется дефолтное булево значение true)[
+  {
+    "bundleId": 3026848,
+    "bid": 0.1,
+    "testBudget": 0.1,
+    "minPayout": null,
+    "maxPayout": null,
+    "placements": "",
+    "typePlacements": true,
+    "enablePostback": false,
+    "enableBoost": null,
+ ...</td><td>201 Createdкуда-то делась площадка у кампании 3883</td><td></td></tr>
+<tr class=""><td>2026-02-19</td><td>проверка ключа enableBoost - значение отрицательное число или строка “test”</td><td>201 Created (вместо строки  числа подставляется дефолтное булево значение true)[
+  {
+    "bundleId": 3026848,
+    "bid": 0.1,
+    "testBudget": 0.1,
+    "minPayout": null,
+    "maxPayout": null,
+    "placements": "",
+    "typePlacements": true,
+    "enablePostback": false,
+    "enableBoost": true,
+ ...</td><td>201 Created</td><td></td></tr>
+<tr class=""><td>2026-02-19</td><td>проверка ключа minRoi - значение отрицательное число -1</td><td>201 Created (minRoi может быть отрицательным)</td><td>201 Created</td><td></td></tr>
+<tr class="failed"><td>2026-02-19</td><td>повтор отправки того же тела (из пункта 2)</td><td>409 Conflict message : “smart CPA campaign with id qacamp1 and campaign name “\"QA_Tanya (SmartCPA) - Test [v.1]\" already exists in DB”</td><td>500 Internal Server Error {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "duplicate key value violates unique constraint \"idx_campaigns_campaign_id_network_name_unique\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-19</td><td>null в необязательных полях {
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "campa...</td><td>400 Bad request message : enableBoost should not be empty; enableBoost must be a boolean value</td><td>201 Created</td><td>failed</td></tr>
+<tr class=""><td>2026-02-19</td><td>проверка ключа bundleId - отрициательное значение</td><td>404 Not found</td><td>404 Not found {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id -3026848 not found",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Not Found"
+  }
+}</td><td></td></tr>
+<tr class=""><td>2026-02-19</td><td>проверка ключа bundleId - значение null{
+  "bundleId": null,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+...</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId should not be empty; bundleId must be a number conforming to the specified constraints",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td></td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключей bid, testBudget, enablePostback - значение null {
+  "bundleId": 3026848,
+  "bid": null,
+  "testBudget": null,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayo...</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bid must be >= 0; bid should not be empty; bid must be a number conforming to the specified constraints; test_budget must be >= 0; testBudget should not be empty; testBudget must be a number conforming...</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>{
+  "bundleId": 3026848,
+  "bid": 0,
+  "testBudget": 0,
+  "minPayout": 0,
+  "maxPayout": 0,
+  "placements": "8565156",
+  "typePlacements": true,
+  "enablePostback": true,
+  "enableBoost": true,
+  "boostBudget": 0,
+  "boostPayout": 0,
+  "minRoi": 0,
+  "campaignName": "\"QA_Tanya (SmartCPA) - Test [v....</td><td>201 Created  [
+  {
+    "bundleId": 3026848,
+    "bid": 0,
+    "testBudget": 0,
+    "minPayout": 0,
+    "maxPayout": 0,
+    "placements": "8565156",
+    "typePlacements": true,
+    "enablePostback": true,
+    "enableBoost": true,
+    "boostBudget": 0,
+    "boostPayout": 0,
+    "minRoi": 0,
+    "campa...</td><td>201 Created</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа placements - значение число {
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": 1,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": nu...</td><td>201 Created (число меняется на строку)[
+  {
+    "bundleId": 3026848,
+    "bid": 0.1,
+    "testBudget": 0.1,
+    "minPayout": null,
+    "maxPayout": null,
+    "placements": "1",
+    "typePlacements": true,
+    "enablePostback": false,
+    "enableBoost": null,
+    "boostBudget": null,
+    "boostPayout...</td><td>201 Created</td><td>passed</td></tr>
+<tr class=""><td>2026-02-19</td><td>проверка ключа typePlacements - значение строка “test” или "typePlacements": -1 - поведение одинаковое (подставляется дефолтное булево значение true)</td><td>201 Created (вместо строки  числа подставляется дефолтное булево значение true)[
+  {
+    "bundleId": 3026848,
+    "bid": 0.1,
+    "testBudget": 0.1,
+    "minPayout": null,
+    "maxPayout": null,
+    "placements": "",
+    "typePlacements": true,
+    "enablePostback": false,
+    "enableBoost": null,
+ ...</td><td>201 Createdкуда-то делась площадка у кампании 3883</td><td>???</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа enableBoost - значение отрицательное число или строка “test”</td><td>201 Created (вместо строки  числа подставляется дефолтное булево значение true)[
+  {
+    "bundleId": 3026848,
+    "bid": 0.1,
+    "testBudget": 0.1,
+    "minPayout": null,
+    "maxPayout": null,
+    "placements": "",
+    "typePlacements": true,
+    "enablePostback": false,
+    "enableBoost": true,
+ ...</td><td>201 Created</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа minRoi - значение отрицательное число -1</td><td>201 Created (minRoi может быть отрицательным)</td><td>201 Created</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-19</td><td>повтор отправки того же тела (из пункта 2)</td><td>409 Conflict message : “smart CPA campaign with id qacamp1 and campaign name “\"QA_Tanya (SmartCPA) - Test [v.1]\" already exists in DB”</td><td>500 Internal Server Error {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "duplicate key value violates unique constraint \"idx_campaigns_campaign_id_network_name_unique\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-19</td><td>null в необязательных полях {
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "campa...</td><td>400 Bad request message : enableBoost should not be empty; enableBoost must be a boolean value</td><td>201 Created</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа bundleId - отрициательное значение</td><td>404 Not found</td><td>404 Not found {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id -3026848 not found",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа bundleId - значение null{
+  "bundleId": null,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+...</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId should not be empty; bundleId must be a number conforming to the specified constraints",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключей bid, testBudget, enablePostback - значение null {
+  "bundleId": 3026848,
+  "bid": null,
+  "testBudget": null,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayo...</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bid must be >= 0; bid should not be empty; bid must be a number conforming to the specified constraints; test_budget must be >= 0; testBudget should not be empty; testBudget must be a number conforming...</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа minPayout - отрицательное значение{
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": -1,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minR...</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "minPayout must be >= 0 or null or undefined",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа minPayout -  значение строка {
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": "test",
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRo...</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "minPayout must be >= 0 or null or undefined; minPayout must be a number or null",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа maxPayout - отрицательное значение {
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": -1,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "min...</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "maxPayout must be >= 0 or null or undefined",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа maxPayout - значение строка {
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": "test",
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi...</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "maxPayout must be >= 0 or null or undefined; maxPayout must be a number or null",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-19</td><td>проверка ключа placements - булево {
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": false,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+...</td><td>400 Bad request</td><td>500 Internal server error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "new row for relation \"smartcpa_campaigns\" violates check constraint \"campaigns_placements_format_chk\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа boostBudget - значение  отрицательное число -1</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "boostBudget must be >= 0 or null or undefined",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа boostBudget - значение  строка “test”</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "boostBudget must be >= 0 or null or undefined; boostBudget must be number",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа boostPayout - значение  отрицательное число -1</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "boostPayout must be >= 0 or null or undefined",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа boostPayout - значение  строка “test”</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "boostPayout must be >= 0 or null or undefined; boostPayout must be a number or null",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа minRoi - значение  строка “test”</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "minRoi must be a number or null",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-19</td><td>проверка ключа campaignName, значение отрицательное число -1 или булево true</td><td>400 Bad request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа quantity - значение отрицательное число</td><td>201 Created с пустым телом (ни одной кампании не создано)</td><td>201 Created</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа quantity - значение строка “test”</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "quantity must be a number conforming to the specified constraints",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-19</td><td>проверка ключей quantity и campaignIds, значения null {
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+...</td><td>400 Bad request</td><td>500 Internal server error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "campaignIds is not iterable",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключей quantity и campaignIds, значения указаны в обоих ключах</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "quantity and campaignIds cannot be used together; quantity and campaignIds cannot be used together",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа campaignIds - значение строка со спецсимволами ["qacamp,.:%№&*"] - ПОЗИТИВНАЯ ПРОВЕРКА</td><td>201 Created [
+  {
+    "bundleId": 3026848,
+    "bid": 0.1,
+    "testBudget": 0.1,
+    "minPayout": null,
+    "maxPayout": null,
+    "placements": "",
+    "typePlacements": true,
+    "enablePostback": false,
+    "enableBoost": false,
+    "boostBudget": null,
+    "boostPayout": null,
+    "minRoi": nul...</td><td>201 Created</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-19</td><td>проверка ключа campaignIds - значение пустой массив</td><td>201 Created с пустым массивом в ответе (не создано ни одной кампании)</td><td>201 Created с пустым массивом в ответе (не создано ни одной кампании)</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-19</td><td>проверка ключа campaignIds - создание кампании на связку NOT MM</td><td>400 Bad request</td><td>201 Createdв БД прописался campaign_id = qacamp</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-19</td><td>проверка ключа campaignIds - значение отрицательное число -1</td><td>400 Bad request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "campaignIds is not iterable",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>Прописаны все ключ - значения{
+  "ids": [3802, 3879, 3899],
+  "bundleId": null,
+  "bid": 0.2,
+  "minPayout": 0.2,
+  "maxPayout": 0.2,
+  "enablePostback": true,
+  "enableBoost": true,
+  "boostBudget": 0.2,
+  "boostPayout": 0.2,
+  "minRoi": 0.2,
+  "placements": "8565156",
+  "typePlacements": false
+}</td><td>200 OK</td><td>200 OКВ БД данные подтянулись корректно (скрины уже не лезут, не загружаются)</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>прописаны только ids {
+  "ids": [3802, 3899, 3882],
+  "bundleId": null,
+  "bid": null,
+  "minPayout": null,
+  "maxPayout": null,
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "placements": null,
+  "typePlacements": null
+}</td><td>200 OK</td><td>200 OKВ БД параметры не меняются</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>указан только bundleId{
+  "ids": null,
+  "bundleId": 3026848,
+  "bid": 0.2,
+  "minPayout": 0.2,
+  "maxPayout": 0.2,
+  "enablePostback": true,
+  "enableBoost": true,
+  "boostBudget": 0.2,
+  "boostPayout": 0.2,
+  "minRoi": 0.2,
+  "placements": "8565156",
+  "typePlacements": false
+}</td><td>200 ОК, обновлены все кампании связки</td><td>200 ОК, обновлены все кампании связки</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>указана только часть ключей {
+  "ids": null,
+  "bundleId": 3026848,
+  "minPayout": 0.3,
+  "maxPayout": 0.3,
+  "enablePostback": false,
+  "enableBoost": false,
+  "boostBudget": 0.3,
+  "boostPayout": 0.3,
+  "minRoi": 0.3
+}</td><td>200 ОК, обновлены все кампании связки, но обновлены только те параметры, которые указаны в запросе</td><td>200 ОК, обновлены все кампании связки, но обновлены только те параметры, которые указаны в запросе</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ids дубликаты {
+  "ids": [3899, 3899, 3899],
+  "bundleId": null,
+  "minPayout": 0.3,
+  "maxPayout": 0.3,
+  "enablePostback": false,
+  "enableBoost": false,
+  "boostBudget": 0.3,
+  "boostPayout": 0.3,
+  "minRoi": 0.3
+}</td><td>200 OK</td><td>200 OK</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключи enablePostback, enableBoost, typePlacements значения отрицательное число {
+  "ids": [3899],
+  "bundleId": null,
+  "bid": null,
+  "minPayout": null,
+  "maxPayout": null,
+  "enablePostback": -1,
+  "enableBoost": -1,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "placements": ...</td><td>200 OK (числа заменяются на дефолтное булево значение true)</td><td>200 OK (числа заменились на дефолтное булево значение true)</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключи enablePostback, enableBoost, typePlacements значения строка  {
+  "ids": [3899],
+  "bundleId": null,
+  "bid": null,
+  "minPayout": null,
+  "maxPayout": "null,
+  "enablePostback": "test",
+  "enableBoost": "test",
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "placements": nul...</td><td>200 OK (числа заменяются на дефолтное булево значение true)</td><td>200 OK (числа заменились на дефолтное булево значение true)</td><td>passed</td></tr>
+<tr class=""><td>2026-02-20</td><td>PUT /smart-cpa</td><td>негативные</td><td>проверки</td><td></td></tr>
+<tr class="passed"><td>2026-02-20</td><td>несуществующие ids{
+  "ids": [81786847],
+  "bundleId": null,
+  "minPayout": 0.3,
+  "maxPayout": 0.3,
+  "enablePostback": false,
+  "enableBoost": false,
+  "boostBudget": 0.3,
+  "boostPayout": 0.3,
+  "minRoi": 0.3
+}</td><td>404 Not found</td><td>404 Not found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ ids - значение строка {
+  "ids": "test",
+  "bundleId": null,
+  "minPayout": 0.3,
+  "maxPayout": 0.3,
+  "enablePostback": false,
+  "enableBoost": false,
+  "boostBudget": 0.3,
+  "boostPayout": 0.3,
+  "minRoi": 0.3
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids must be an array of numbers; ids must be an array of numbers",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>проверка ключей ids и bundleId - указаны оба ключа{
+  "ids": [3802, 3899, 3882],
+  "bundleId": 3026848,
+  "bid": null,
+  "minPayout": null,
+  "maxPayout": null,
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "placements": null,
+  "t...</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids and bundleId cannot be used together; ids and bundleId cannot be used together",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>ключи ids и bundleId значения null{
+  "ids": null,
+  "bundleId": null,
+  "minPayout": 0.3,
+  "maxPayout": 0.3,
+  "enablePostback": false,
+  "enableBoost": false,
+  "boostBudget": 0.3,
+  "boostPayout": 0.3,
+  "minRoi": 0.3
+}</td><td>400 Bad request</td><td>200 ОК</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>несуществующий bundleId{
+  "ids": null,
+  "bundleId": 1234567,
+  "minPayout": 0.3,
+  "maxPayout": 0.3,
+  "enablePostback": false,
+  "enableBoost": false,
+  "boostBudget": 0.3,
+  "boostPayout": 0.3,
+  "minRoi": 0.3
+}</td><td>404 Not Found</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id 1234567 not found",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ bundleId - значение строка {
+  "ids": null,
+  "bundleId": "test",
+  "minPayout": 0.3,
+  "maxPayout": 0.3,
+  "enablePostback": false,
+  "enableBoost": false,
+  "boostBudget": 0.3,
+  "boostPayout": 0.3,
+  "minRoi": 0.3
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId must be a number",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключи bid, minPayout, maxPayout,  boostBudget, boostPayout ,  minRoi значения отрицательное число {
+  "ids": [3899],
+  "bundleId": null,
+  "bid": -0.2,
+  "minPayout": -0.2,
+  "maxPayout": -0.2,
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": -0.2,
+  "boostPayout": -0.2,
+  "minRoi":...</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bid must be >= 0",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключи bid, minPayout, maxPayout,  boostBudget, boostPayout , minRoi значения строки “test” {
+  "ids": [3899],
+  "bundleId": null,
+  "bid": "test",
+  "minPayout": "test",
+  "maxPayout": "test",
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": "test",
+  "boostPayout": "test",
+  "minRo...</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bid must be >= 0; bid must be a number conforming to the specified constraints; minPayout must be >= 0 or null or undefined; minPayout must be a number or null; maxPayout must be >= 0 or null or undefi...</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>ключ placements - значение отрицательное число {
+  "ids": [3899],
+  "bundleId": null,
+  "bid": null,
+  "minPayout": null,
+  "maxPayout": null,
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "placements": -1,
+  "typePlacements": null...</td><td>400 Bad request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "new row for relation \"smartcpa_campaigns\" violates check constraint \"campaigns_placements_format_chk\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>ключ placements - значение строка {
+  "ids": [3899],
+  "bundleId": null,
+  "bid": null,
+  "minPayout": null,
+  "maxPayout": null,
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "placements": "test",
+  "typePlacements": null
+}</td><td>400 Bad request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "new row for relation \"smartcpa_campaigns\" violates check constraint \"campaigns_placements_format_chk\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>указан только ключ bundleId{
+  "ids": [],
+  "bundleId": 3026848
+}</td><td>200 ОК , кампании запущены</td><td>404 Not Found (при этом у данной связки есть три незапущенных кампании, я ожидала, что они должны запуститься){
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Foun...</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>указан ключ ids{
+  "ids": [3899],
+  "bundleId": null
+}</td><td>200 ОК , кампании запущены</td><td>200 ОК , кампании запущены</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ ids - значение число {
+  "ids": 3899,
+  "bundleId": null
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids must be an array of numbers",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>ключ ids - значение пустой массив{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad request "message": "bundleId or ids must be provided"</td><td>404 Not Found {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ ids - значение несуществующий id{
+  "ids": [1234567],
+  "bundleId": null
+}</td><td>404 Not Found</td><td>404 Not Found {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>указаны и ids, и bundleId{
+  "ids": [3879],
+  "bundleId": 3026848
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids and bundleId cannot be used together; ids and bundleId cannot be used together",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>кличи ids, bundleId - значения null</td><td>400 Bad request{
+  "serviceName": "internal-service-bundle",
+  "statusCode": 400,
+  "message": "Either ids or bundle_id must be provided",
+  "data": {
+    "path": "/api/smart-cpa-campaigns/resume",
+    "method": "PATCH",
+    "message": "Either ids or bundle_id must be provided"
+  }
+}</td><td>200 ОК</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ bundleId - значение отрицательное число{
+  "ids": null,
+  "bundleId": -3026848
+}</td><td>404 Not Found</td><td>404 Not Found {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id -3026848 not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ bundleId - значение строка {
+  "ids": null,
+  "bundleId": "test"
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId must be a number",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>указан только ключ bundleId{
+  "ids": [],
+  "bundleId": 3026848
+}</td><td>200 ОК , кампании запущены</td><td>404 Not Found (при этом у данной связки есть одна запущенная кампания, я ожидала, что она должна встать на паузу){
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not F...</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>указан ключ ids{
+  "ids": [3899],
+  "bundleId": null
+}</td><td>200 ОК , кампания на паузе</td><td>200 ОК , кампания на паузе</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ ids - значение число{
+  "ids": 3899,
+  "bundleId": null
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids must be an array of numbers",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>ключ ids - значение пустой массив{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad request "message": "bundleId or ids must be provided"</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ ids - значение несуществующий id{
+  "ids": [1234567],
+  "bundleId": null
+}</td><td>404 Not Found</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>указаны и ids, и bundleId{
+  "ids": [3879],
+  "bundleId": 3026848
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids and bundleId cannot be used together; ids and bundleId cannot be used together",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>кличи ids, bundleId - значения null</td><td>400 Bad request{
+  "serviceName": "internal-service-bundle",
+  "statusCode": 400,
+  "message": "Either ids or bundle_id must be provided",
+  "data": {
+    "path": "/api/smart-cpa-campaigns/resume",
+    "method": "PATCH",
+    "message": "Either ids or bundle_id must be provided"
+  }
+}</td><td>200 ОК</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ bundleId - значение отрицательное число{
+  "ids": null,
+  "bundleId": -3026848
+}</td><td>404 Not Found</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id -3026848 not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ключ bundleId - значение строка{
+  "ids": null,
+  "bundleId": "test"
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId must be a number",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>указан только ключ bundleId{
+  "ids": [],
+  "bundleId": 3026848
+}</td><td>200 OK</td><td>200 OK</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>указан только ключ ids{
+  "ids": [3887],
+  "bundleId": null
+}</td><td>200 OK</td><td>200 OK, кампания удалена</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>запрос без ids{
+  "bundleId": 3026848
+}</td><td>200 OK</td><td>200 OK</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>запрос без bundleId{
+  "ids": [3888]
+}</td><td>200 OK</td><td>200 OK, кампания удалена</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>ids пустой массив{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>ids несуществующий{
+  "ids": [1234567],
+  "bundleId": null
+}</td><td>404 Not Found</td><td>200 OK</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>ids строка {
+  "ids": "test",
+  "bundleId": null
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids must be an array of numbers; ids must be an array of numbers",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "DELETE",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>указаны и ids, и bundleId{
+  "ids": [3907],
+  "bundleId": 3026848
+}</td><td>400 Bad request</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "ids and bundleId cannot be used together; ids and bundleId cannot be used together",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "DELETE",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>ids и bundleId null {
+  "ids": null,
+  "bundleId": null
+}</td><td>400 Bad Request"message": "Either ids or bundle_id must be provided"</td><td>200 ОК</td><td>failed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>bundleId несуществующий{
+  "ids": null,
+  "bundleId": -3026848
+}</td><td>404 Not found</td><td>404 Not found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "bundle with bundle_id -3026848 not found",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "DELETE",
+    "error": "Not Found"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>bundleId строка {
+  "ids": null,
+  "bundleId": "test"
+}</td><td>400 Bad Request</td><td>400 Bad Request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "bundleId must be a number",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "DELETE",
+    "error": "Bad Request"
+  }
+}</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>bundleId 3026848limit 2offset 1order [["id", "DESC"]]</td><td>200 ОК, в теле ответа информаиця по 2 кампаниям запрашиваемой связки, id по убыванию</td><td>200 ОК, в теле ответа информаиця по 2 кампаниям запрашиваемой связки, id по убыванию</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>bundleIdlimitoffsetorder</td><td>200 ОК, в теле ответа информация по 10 кампаниям (дефолтное значение)</td><td>200 ОК, в теле ответа информация по 10 кампаниям (дефолтное значение)</td><td>passed</td></tr>
+<tr class="passed"><td>2026-02-20</td><td>bundleId 1234567limitoffsetorder</td><td>200 ОК с пустым телом ответа</td><td>200 ОК с пустым телом ответа</td><td>passed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>bundleIdlimitoffset -1order</td><td>400 Bad request {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "OFFSET must not be negative",
+  "data": {
+    "path": "/smart-cpa?limit=-1&offset=-1",
+    "method": "GET"
+  }
+}</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "OFFSET must not be negative",
+  "data": {
+    "path": "/smart-cpa?limit=-1&offset=-1",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>bundleIdlimit  -1offsetorder</td><td>400 Bad request {
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "LIMIT must not be negative",
+  "data": {
+    "path": "/smart-cpa?limit=-1",
+    "method": "GET"
+  }
+}</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "LIMIT must not be negative",
+  "data": {
+    "path": "/smart-cpa?limit=-1",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-20</td><td>bundleIdlimitoffsetorder [["bid", "ASC"]]</td><td>400 Bad request (по факту 500){
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "Property \"bid\" was not found in \"DisplaySmartCpaCampaignsView\". Make sure your query is correct.",
+  "data": {
+    "path": "/smart-cpa?order=%5B%5B%22bid%22%2C%20%22ASC%22%5D%5D",
+  ...</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "Property \"bid\" was not found in \"DisplaySmartCpaCampaignsView\". Make sure your query is correct.",
+  "data": {
+    "path": "/smart-cpa?order=%5B%5B%22bid%22%2C%20%22ASC%22%5D%5D",
+    "me...</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>bundleIdlimitoffset -1order</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "OFFSET must not be negative",
+  "data": {
+    "path": "/smart-cpa?limit=-1&offset=-1",
+    "method": "GET"
+  }
+}</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "OFFSET must not be negative",
+  "data": {
+    "path": "/smart-cpa?limit=-1&offset=-1",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>bundleIdlimit  -1offsetorder</td><td>400 Bad request{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "LIMIT must not be negative",
+  "data": {
+    "path": "/smart-cpa?limit=-1",
+    "method": "GET"
+  }
+}</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "LIMIT must not be negative",
+  "data": {
+    "path": "/smart-cpa?limit=-1",
+    "method": "GET"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>bundleIdlimitoffsetorder [["bid", "ASC"]]</td><td>400 Bad request (по факту 500){
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 400,
+  "message": "Property \"bid\" was not found in \"DisplaySmartCpaCampaignsView\". Make sure your query is correct.",
+  "data": {
+    "path": "/smart-cpa?order=%5B%5B%22bid%22%2C%20%22ASC%22%5D%5D",
+  ...</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "Property \"bid\" was not found in \"DisplaySmartCpaCampaignsView\". Make sure your query is correct.",
+  "data": {
+    "path": "/smart-cpa?order=%5B%5B%22bid%22%2C%20%22ASC%22%5D%5D",
+    "me...</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ids пустой массив{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad request</td><td>200 OK</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ids несуществующий{
+  "ids": [1234567],
+  "bundleId": null
+}</td><td>404 Not Found</td><td>200 OK</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ids и bundleId null{
+  "ids": null,
+  "bundleId": null
+}</td><td>400 Bad Request"message": "Either ids or bundle_id must be provided"</td><td>200 ОК</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>указан только ключ bundleId{
+  "ids": [],
+  "bundleId": 3026848
+}</td><td>200 ОК , кампании на паузе</td><td>404 Not Found (при этом у данной связки есть одна запущенная кампания, я ожидала, что она должна встать на паузу){
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not F...</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ключ ids - значение пустой массив{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad request "message": "bundleId or ids must be provided"</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ключи ids, bundleId - значения null</td><td>400 Bad request{
+  "serviceName": "internal-service-bundle",
+  "statusCode": 400,
+  "message": "Either ids or bundle_id must be provided",
+  "data": {
+    "path": "/api/smart-cpa-campaigns/resume",
+    "method": "PATCH",
+    "message": "Either ids or bundle_id must be provided"
+  }
+}</td><td>200 ОК</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>указан только ключ bundleId{
+  "ids": [],
+  "bundleId": 3026848
+}</td><td>200 ОК , кампании запущены</td><td>404 Not Found (при этом у данной связки есть три незапущенных кампании, я ожидала, что они должны запуститься){
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Foun...</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ключ ids - значение пустой массив{
+  "ids": [],
+  "bundleId": null
+}</td><td>400 Bad request "message": "bundleId or ids must be provided"</td><td>404 Not Found{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 404,
+  "message": "Ids not found",
+  "data": {
+    "path": "/smart-cpa/resume",
+    "method": "PATCH",
+    "error": "Not Found"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ключи ids, bundleId - значения null</td><td>400 Bad request{
+  "serviceName": "internal-service-bundle",
+  "statusCode": 400,
+  "message": "Either ids or bundle_id must be provided",
+  "data": {
+    "path": "/api/smart-cpa-campaigns/resume",
+    "method": "PATCH",
+    "message": "Either ids or bundle_id must be provided"
+  }
+}</td><td>200 ОК</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ключи ids и bundleId значения null{
+  "ids": null,
+  "bundleId": null,
+  "minPayout": 0.3,
+  "maxPayout": 0.3,
+  "enablePostback": false,
+  "enableBoost": false,
+  "boostBudget": 0.3,
+  "boostPayout": 0.3,
+  "minRoi": 0.3
+}</td><td>400 Bad request</td><td>200 ОК</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ключ placements - значение отрицательное число{
+  "ids": [3899],
+  "bundleId": null,
+  "bid": null,
+  "minPayout": null,
+  "maxPayout": null,
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "placements": -1,
+  "typePlacements": null
+...</td><td>400 Bad request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "new row for relation \"smartcpa_campaigns\" violates check constraint \"campaigns_placements_format_chk\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>ключ placements - значение строка{
+  "ids": [3899],
+  "bundleId": null,
+  "bid": null,
+  "minPayout": null,
+  "maxPayout": null,
+  "enablePostback": null,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "placements": "test",
+  "typePlacements": null
+}</td><td>400 Bad request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "new row for relation \"smartcpa_campaigns\" violates check constraint \"campaigns_placements_format_chk\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "PUT"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>проверка ключа placements - булево{
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": false,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+ ...</td><td>400 Bad request</td><td>500 Internal server error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "new row for relation \"smartcpa_campaigns\" violates check constraint \"campaigns_placements_format_chk\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>проверка ключа campaignName, значение отрицательное число -1 или булево true</td><td>400 Bad request</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>проверка ключей quantity и campaignIds, значения null{
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+ ...</td><td>400 Bad request</td><td>500 Internal server error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "campaignIds is not iterable",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>проверка ключа campaignIds - создание кампании на связку NOT MM</td><td>400 Bad request</td><td>201 Createdв БД прописался campaign_id = qacamp</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>проверка ключа campaignIds - значение отрицательное число -1</td><td>400 Bad request</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "campaignIds is not iterable",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>null в необязательных полях{
+  "bundleId": 3026848,
+  "bid": 0.1,
+  "testBudget": 0.1,
+  "minPayout": null,
+  "maxPayout": null,
+  "placements": null,
+  "typePlacements": null,
+  "enablePostback": false,
+  "enableBoost": null,
+  "boostBudget": null,
+  "boostPayout": null,
+  "minRoi": null,
+  "campai...</td><td>400 Bad requestmessage : enableBoost should not be empty; enableBoost must be a boolean value</td><td>201 Created</td><td>failed</td></tr>
+<tr class="failed"><td>2026-02-23</td><td>повтор отправки того же тела</td><td>409 Conflictmessage : “smart CPA campaign with id qacamp1 and campaign name “\"QA_Tanya (SmartCPA) - Test [v.1]\" already exists in DB”</td><td>500 Internal Server Error{
+  "serviceName": "internal-service-smart-cpa",
+  "statusCode": 500,
+  "message": "duplicate key value violates unique constraint \"idx_campaigns_campaign_id_network_name_unique\"",
+  "data": {
+    "path": "/smart-cpa",
+    "method": "POST"
+  }
+}</td><td>failed</td></tr>
+</tbody></table>
+<p style="margin-top:20px;font-size:11px;color:#999">Generated by Logos from Jira CDR-660 comments</p>
+</body></html>
